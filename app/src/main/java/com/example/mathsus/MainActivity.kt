@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MATHSUSTheme {
 
@@ -41,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = "bisection") {
-                            BisectionScreen(navController = navController)
+                            BisectionScreen()
                         }
 
                         composable(route = "newton") {

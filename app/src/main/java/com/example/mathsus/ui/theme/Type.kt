@@ -2,9 +2,11 @@ package com.example.mathsus.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.mathsus.R
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -31,4 +33,15 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
     */
+)
+
+val OverPassFontFamily = FontFamily(
+        Font(R.font.overpass_black, FontWeight.Black),
+        Font(R.font.overpass_bold, FontWeight.Bold),
+        Font(R.font.overpass_extrabold, FontWeight.ExtraBold),
+        Font(R.font.overpass_extralight, FontWeight.ExtraLight),
+        Font(R.font.overpass_light, FontWeight.Light),
+        Font(R.font.overpass_regular, FontWeight.Normal),
+        Font(R.font.overpass_semibold, FontWeight.SemiBold),
+        Font(R.font.overpass_thin, FontWeight.Thin),
 )
