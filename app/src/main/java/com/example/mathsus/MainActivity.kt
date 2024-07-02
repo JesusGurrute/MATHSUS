@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = "bisection") {
-                            BisectionScreen()
+                            BisectionScreen(navController = navController)
                         }
 
                         composable(route = "newton") {

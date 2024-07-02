@@ -15,7 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -120,16 +121,19 @@ fun SplashScreen(navController: NavController) {
                     .padding(8.dp, 24.dp)
                     .fillMaxWidth()
             ) {
-                Text(text = "Conoce más",
-
-                    )
+                Icon(imageVector = Icons.Default.ArrowRight, contentDescription = "Back")
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Conoce más")
 
                 Spacer(modifier = Modifier.width(8.dp))
 
+                /*
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = ""
                 )
+                 */
+
 
 
             }

@@ -2,7 +2,6 @@ package com.example.mathsus.ui.features
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,7 +24,8 @@ import com.example.mathsus.ui.theme.OverPassFontFamily
 @Composable
 fun HomeHeader(
     method: String,
-    description: String
+    description: String,
+
 ) {
 
     val homeHeaderBg = "https://i.imgur.com/vxPn35h.png"
@@ -38,7 +38,7 @@ fun HomeHeader(
             contentDescription = "Home header background", // Provide a descriptive content descriptioncontentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(250.dp),
             contentScale = ContentScale.Crop
         )
         Column(
@@ -53,14 +53,15 @@ fun HomeHeader(
                 //color = rojounicaucaColor,
                 fontFamily = OverPassFontFamily,
                 fontWeight = FontWeight.Medium,
-                fontSize = 28.sp,
-                lineHeight = 35.sp,
+                fontSize = 26.sp,
+                lineHeight = 32.sp,
                 letterSpacing = (-1).sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 textAlign = TextAlign.Justify
             )
+
 
             Text(
                 text = description,
