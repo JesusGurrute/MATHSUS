@@ -16,3 +16,9 @@ fun Derivada(a: Double, f: String): Double {
     var df = Expression("der($f, x, ${a})").calculate()
     return df
 }
+
+fun calcularFuncion(a: Double, f: String): Double {
+    val funcion = Function("f", f, "x")
+    val expresion = org.mariuszgromada.math.mxparser.Expression("f($a)", funcion)
+    return expresion.calculate()
+}

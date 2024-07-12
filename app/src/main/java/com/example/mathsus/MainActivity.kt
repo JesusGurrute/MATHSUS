@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mathsus.ui.features.BisectionScreen
+import com.example.mathsus.ui.features.Info
 import com.example.mathsus.ui.features.NewtonScreen
 import com.example.mathsus.ui.features.SecanteScreen
 import com.example.mathsus.ui.features.SplashScreen
@@ -53,6 +54,9 @@ class MainActivity : ComponentActivity() {
                         composable(route = "secante") {
                             SecanteScreen(navController = navController)
                         }
+
+                        composable(route = "info") {
+                            Info(navController = navController)                        }
                     }
 
                 }

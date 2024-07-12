@@ -31,7 +31,9 @@ fun HomeHeader(
     val homeHeaderBg = "https://i.imgur.com/vxPn35h.png"
 
     Box(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         AsyncImage(
             model = homeHeaderBg,

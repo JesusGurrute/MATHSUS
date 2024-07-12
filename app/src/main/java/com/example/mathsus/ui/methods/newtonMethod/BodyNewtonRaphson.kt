@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
@@ -27,6 +28,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BodyNewtonRaphson() {
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+
+    }
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -34,17 +42,16 @@ fun BodyNewtonRaphson() {
 
     ) {
 
-        var funcion = remember { mutableStateOf("") }
-        var x_i = remember { mutableStateOf("") }
-        var maxIter = remember { mutableStateOf("") }
-        var bandera = remember { mutableStateOf("") }
-        var context = LocalContext.current
+        val funcion = remember { mutableStateOf("") }
+        val x_k = remember { mutableStateOf("") }
+        val error = remember { mutableStateOf("") }
+        val bandera = remember { mutableStateOf("") }
+        val context = LocalContext.current
 
 
         OutlinedTextField(
             label = { Text(text = "Ingrese la función") },
             value = funcion.value,
-            //colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = Color.White, //textColor = Color.Blue),
             onValueChange = {
                 if (funcion.value.length <= 30)
                     funcion.value = it
@@ -55,30 +62,29 @@ fun BodyNewtonRaphson() {
         Row {
             OutlinedTextField(
                 label = { Text(text = "X") },
-                value = x_i.value,
+                value = x_k.value,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-                //colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = Color.White, //textColor = Color.Blue),
                 onValueChange = {
-                    x_i.value = it
+                    x_k.value = it
                 },
                 shape = RoundedCornerShape(size = 8.dp),
                 modifier = Modifier.size(width = 80.dp, height = 60.dp)
             )
+
             Spacer(modifier = Modifier.width(8.dp))
 
             OutlinedTextField(
-                label = { Text(text = "Iteraciones") },
-                value = maxIter.value,
+                label = { Text(text = "Error") },
+                value = error.value,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-                //colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = Color.White, //textColor = Color.Blue),
                 onValueChange = {
-                    maxIter.value = it
+                    error.value = it
                 },
                 shape = RoundedCornerShape(size = 8.dp),
                 modifier = Modifier.size(width = 150.dp, height = 60.dp)
@@ -88,10 +94,10 @@ fun BodyNewtonRaphson() {
 
         Button(
             onClick = {
-                if (x_i.value.isEmpty() || maxIter.value.isEmpty() || funcion.value.isEmpty()) {
+                if (x_k.value.isEmpty() || funcion.value.isEmpty()) {
                     Toast.makeText(context, "No deje datos vacios", Toast.LENGTH_SHORT).show()
                 } else {
-                    bandera.value = x_i.value
+                    bandera.value = x_k.value
                     Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -107,10 +113,11 @@ fun BodyNewtonRaphson() {
                 Text(text = "Al llenar todas las casillas, oprima el boton 'calcular'")
             } else {
                 NewtonRaphson(
-                    x_i = x_i.value.toDouble(),
+                    x = x_k.value.toDouble(),
                     f = funcion.value,
-                    maxIter = maxIter.value.toInt()
-                )
+                    error = error.value.toDouble()
+
+                    )
 
             }
         }
