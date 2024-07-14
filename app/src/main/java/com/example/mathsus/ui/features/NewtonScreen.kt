@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.mathsus.ui.features.navigation_menu_newton.ExerciseNewton
+import com.example.mathsus.ui.features.navigation_menu_newton.InformationNewton
 import com.example.mathsus.ui.methods.FAB
 import com.example.mathsus.ui.methods.newtonMethod.BodyNewtonRaphson
 
@@ -21,13 +25,12 @@ fun NewtonScreen(navController: NavHostController) {
             HomeHeader(
                 "Método de Newton-Raphson",
                 "En el método de Newton, se supone desde el principio que la función f es derivable. Esto implica que la gráfica de f tiene una pendiente definida en cada punto y, por tanto, una recta tangente única.\n" +
-                        "Las expresiones que puede usar son: sen(x), cos(x), tan(x), cot(x), sec(x), csc(x), log(x), ln(x), x^,e, pi, sqrt(x) y composición de estas teniendo en cuenta el uso correcto de los paréntesis con puntuacion en decimales en vez de comas.\n"+
+                        "Las expresiones que puede usar son: sen(x), cos(x), tan(x), cot(x), sec(x), csc(x), log(x), ln(x), x^,e, pi, sqrt(x) y composición de estas teniendo en cuenta el uso correcto de los paréntesis con puntuacion en decimales en vez de comas.\n" +
                         "El máximo de iteraciones que usa es de 200"
             )
 
 
         },
-
 
         content = { padding ->
 
@@ -55,9 +58,24 @@ fun NewtonScreen(navController: NavHostController) {
 
             }
         },
-        floatingActionButton = { FAB(navController = navController) }
+        bottomBar = { BottomNavBar(navController = navController) },
+
+        //floatingActionButton = { FAB(navController = navController) }
 
     )
+
+    /*
+    // Navegación
+    NavHost(
+        navController = navController,
+        startDestination = "newton"
+    ) {
+        composable("newton") { NewtonScreen(navController = navController) }
+        composable("infoNewton") { InformationNewton(navController = navController) } // Asegúrate de que InfoScreen exista
+        composable("exerciseNewton") { ExerciseNewton(navController = navController) } // Asegúrate de que ExerciseScreen exista
+    }
+
+     */
 
 
 }

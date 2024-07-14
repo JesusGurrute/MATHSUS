@@ -17,6 +17,8 @@ import com.example.mathsus.ui.features.Info
 import com.example.mathsus.ui.features.NewtonScreen
 import com.example.mathsus.ui.features.SecanteScreen
 import com.example.mathsus.ui.features.SplashScreen
+import com.example.mathsus.ui.features.navigation_menu_newton.ExerciseNewton
+import com.example.mathsus.ui.features.navigation_menu_newton.InformationNewton
 import com.example.mathsus.ui.theme.MATHSUSTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,7 +58,16 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = "info") {
-                            Info(navController = navController)                        }
+                            Info(navController = navController)
+                        }
+
+                        composable(route = "infoNewton") {
+                            InformationNewton(navController = navController)
+                        }
+
+                        composable(route = "exerciseNewton") {
+                            ExerciseNewton(navController = navController)
+                        }
                     }
 
                 }

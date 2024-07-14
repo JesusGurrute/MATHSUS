@@ -5,10 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.example.mathsus.ui.features.navigation_menu_newton.InformationNewton
 import com.example.mathsus.ui.methods.FAB
 
 
@@ -19,8 +23,10 @@ fun Info(
 ) {
     Scaffold(
         topBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
 
             }
 
@@ -35,18 +41,11 @@ fun Info(
                     modifier = Modifier
                         .weight(2f)
                         .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
 
                 ) {
-
+                    InformationNewton(navController = navController)
                 }
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                ) {
-
-                }
-
             }
         },
         floatingActionButton = { FAB(navController = navController) }

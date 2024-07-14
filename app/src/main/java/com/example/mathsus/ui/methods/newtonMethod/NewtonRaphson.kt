@@ -28,7 +28,6 @@ fun NewtonRaphson(
     f: String,
     error: Double
 ) {
-
     val context = LocalContext.current
 
     Box(

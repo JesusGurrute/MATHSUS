@@ -86,6 +86,7 @@ dependencies {
     implementation(libs.androidx.activity.compose.v130alpha06)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation (libs.androidx.activity.compose.v160)
     implementation(platform(libs.androidx.compose.bom)
     )
 }
