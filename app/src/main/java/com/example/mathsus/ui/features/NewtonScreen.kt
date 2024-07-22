@@ -5,16 +5,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocalLibrary
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.example.mathsus.ui.features.navigation_menu_newton.ExerciseNewton
-import com.example.mathsus.ui.features.navigation_menu_newton.InformationNewton
-import com.example.mathsus.ui.methods.FAB
 import com.example.mathsus.ui.methods.newtonMethod.BodyNewtonRaphson
-
 
 @Composable
 fun NewtonScreen(navController: NavHostController) {
@@ -28,8 +34,6 @@ fun NewtonScreen(navController: NavHostController) {
                         "Las expresiones que puede usar son: sen(x), cos(x), tan(x), cot(x), sec(x), csc(x), log(x), ln(x), x^,e, pi, sqrt(x) y composición de estas teniendo en cuenta el uso correcto de los paréntesis con puntuacion en decimales en vez de comas.\n" +
                         "El máximo de iteraciones que usa es de 200"
             )
-
-
         },
 
         content = { padding ->
@@ -46,48 +50,44 @@ fun NewtonScreen(navController: NavHostController) {
                 ) {
                     BodyNewtonRaphson()
                 }
-                /*
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                ) {
-                    CurrenciesSection()
-                }
-                 */
-
             }
         },
-        bottomBar = { BottomNavBar(navController = navController) },
+        bottomBar = { BottomNavBarNewton(navController = navController) },
 
         //floatingActionButton = { FAB(navController = navController) }
-
     )
-
-    /*
-    // Navegación
-    NavHost(
-        navController = navController,
-        startDestination = "newton"
-    ) {
-        composable("newton") { NewtonScreen(navController = navController) }
-        composable("infoNewton") { InformationNewton(navController = navController) } // Asegúrate de que InfoScreen exista
-        composable("exerciseNewton") { ExerciseNewton(navController = navController) } // Asegúrate de que ExerciseScreen exista
-    }
-
-     */
-
-
 }
 
-/*
-Button(
-            onClick = {
-                navController.navigate("splash")
-            }
-        ) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Regreso a la pantalla principal")
-        }
- */
+
+@Composable
+fun BottomNavBarNewton(navController: NavController) {
+    BottomNavigation(
+        backgroundColor = Color.White,
+        elevation = 8.dp
+    ) {
+        BottomNavigationItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
+            label = { Text("Inicio") },
+            selected = false, // Cambia esto según la navegación actual
+            onClick = { navController.navigate("splash") }
+        )
+        BottomNavigationItem(
+            icon = { Icon(Icons.Default.Calculate, contentDescription = "Calculadora") },
+            label = { Text("Calculadora") },
+            selected = false, // Cambia esto según la navegación actual
+            onClick = { navController.navigate("newton") }
+        )
+        BottomNavigationItem(
+            icon = { Icon(Icons.Default.Info, contentDescription = "Información") },
+            label = { Text("Método") },
+            selected = false,
+            onClick = { navController.navigate("infoNewton") }
+        )
+        BottomNavigationItem(
+            icon = { Icon(Icons.Default.LocalLibrary, contentDescription = "") },
+            label = { Text("Ejercicios") },
+            selected = false,
+            onClick = { navController.navigate("exerciseNewton") }
+        )
+    }
+}

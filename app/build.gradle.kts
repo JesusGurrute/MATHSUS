@@ -87,6 +87,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.constraintlayout.compose)
     implementation (libs.androidx.activity.compose.v160)
+    //exo player
+    implementation (libs.exoplayer)
+    implementation (libs.exoplayer.ui)
     implementation(platform(libs.androidx.compose.bom)
     )
 }

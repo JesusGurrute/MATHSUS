@@ -24,6 +24,8 @@ import androidx.compose.material.Icon
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.runtime.Composable
@@ -136,6 +138,11 @@ fun FAB(navController: NavHostController) {
         },
         backgroundColor = Color.Blue
     ) {
-        Text(text = "Atras", color = Color.White)
+        Icon(
+            imageVector = Icons.Default.Home,
+            contentDescription = "Inicio",
+            tint = Color.White
+        )
     }
 }
+

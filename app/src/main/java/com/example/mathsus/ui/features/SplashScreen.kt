@@ -1,6 +1,5 @@
 package com.example.mathsus.ui.features
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -59,21 +58,16 @@ fun SplashScreen(navController: NavController) {
                     color = Color.White
                 )
                 .padding(16.dp)
-
         ) {
             VerticalButton(
-                //vector = Icons.Filled.DataThresholding,
                 text = "Método\nde la \nbisección"
             ) { navController.navigate("bisection") }
             VerticalButton(
-                //vector = Icons.Filled.Addchart,
                 text = "Método\nNewton\nRaphson"
             ) { navController.navigate("newton") }
             VerticalButton(
-                //vector = Icons.Filled.DisplaySettings,
                 text = "Método\nde la \nsecante"
             ) { navController.navigate("secante") }
-
         }
 
         Column(
@@ -91,7 +85,6 @@ fun SplashScreen(navController: NavController) {
             Text(
                 text = "MATHSUS",
                 color = Color.Red,
-                //color = rojounicaucaColor,
                 fontFamily = OverPassFontFamily,
                 fontWeight = FontWeight.Bold, fontSize = 32.sp,
                 letterSpacing = (-1).sp,
@@ -124,18 +117,6 @@ fun SplashScreen(navController: NavController) {
                 Icon(imageVector = Icons.Default.ArrowRight, contentDescription = "Back")
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Conoce más")
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                /*
-                Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = ""
-                )
-                 */
-
-
-
             }
 
         }

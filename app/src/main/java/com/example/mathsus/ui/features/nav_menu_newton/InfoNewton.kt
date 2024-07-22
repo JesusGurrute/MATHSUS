@@ -1,4 +1,4 @@
-package com.example.mathsus.ui.features.navigation_menu_newton
+package com.example.mathsus.ui.features.nav_menu_newton
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -18,20 +18,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mathsus.R
-import com.example.mathsus.ui.features.BottomNavBar
-import com.example.mathsus.ui.methods.FAB
+import com.example.mathsus.ui.features.BottomNavBarNewton
 
 @Composable
 fun InformationNewton(navController: NavHostController) {
 
     androidx.compose.material.Scaffold(
-
 
         content = { padding ->
 
@@ -47,21 +46,19 @@ fun InformationNewton(navController: NavHostController) {
                         .fillMaxWidth()
                         .verticalScroll(rememberScrollState())
                 ) {
-                    InfoNewton(navController = navController)
+                    InfoNewton()
                 }
-
             }
         },
-        bottomBar = { BottomNavBar(navController = navController) },
+        bottomBar = { BottomNavBarNewton(navController = navController) },
 
         //floatingActionButton = { FAB(navController = navController) }
     )
 }
 
 @Composable
-fun InfoNewton(
-    navController: NavHostController
-) {
+fun InfoNewton() {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,6 +68,7 @@ fun InfoNewton(
     ) {
         Text(
             text = "Método de Newton",
+            color = Color.Blue,
             style = MaterialTheme.typography.h4,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -239,7 +237,111 @@ fun InfoNewton(
             textAlign = TextAlign.Justify
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Ejemplo 1",
+            color = Color.Blue,
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Si f(x)= x^3 – x + 1 y x₀ = 1, ¿cuáles son x_1 y x_2 en la iteración de Newton?",
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Solución",
+            color = Color.Blue,
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "De la fórmula básica, x1 = x₀ – f(x₀)/f´(x₀). Ahora f´(x) = 3x^2 – 1, y así f´(1) = 2. También, encontramos f (1) = 1. Por tanto, tenemos x1 = 1-(1/2) = 1/2. De manera similar, obtenemos f (1/2) = (5/8), f´ (1/2) = -1/4 y x_2 = 3 ",
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Usando el valor inicial de x como punto de partida, realizamos un máximo de 200 iteraciones del método de Newton. Los procedimientos se deben proporcionar para las funciones externas f(x) y f´(x). El parámetro ε (error) se usa para controlar la convergencia y están relacionados con la exactitud deseada o a la precisión de máquina disponible.",
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Ilustración",
+            color = Color.Blue,
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Ahora mostraremos el método de Newton para localizar una raíz de x^3 + x = 2x^2 + 3. Aplicamos el método a la función f(x) = x^3 – 2x^2 + x – 3, iniciando con x₀ = 3. Por supuesto, f´(x) = 3x^2 – 4x + 1, y estas dos funciones se debe arreglar en forma anidada por eficiencia:",
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.ec_ocho_newton), // Recurso drawable
+            contentDescription = "Home header background",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            contentScale = ContentScale.Crop
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Para ver con mayor detalle la convergencia rápida del método de Newton usamos aritmética con el doble de la precisión normal en el programa y obtenemos los resultados siguientes:",
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.ec_nueve_newton), // Recurso drawable
+            contentDescription = "Home header background",
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentScale = ContentScale.Crop
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.graph_uno_newton), // Recurso drawable
+            contentDescription = "",
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentScale = ContentScale.Crop
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Observe la duplicación de la exactitud en f (x) (y también en x) hasta que se encuentra la máxima precisión de app. La gráfica en computadora muestra tres iteraciones del método de Newton para este problema de ejemplo.",
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Usando el software encontramos que el polinomio tiene una sola raíz real, 2.17456.",
+            textAlign = TextAlign.Justify
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
     }
-
-
 }
