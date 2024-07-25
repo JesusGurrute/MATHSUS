@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -45,7 +46,7 @@ fun BodyNewtonRaphson() {
     ) {
 
         val funcion = remember { mutableStateOf("") }
-        val x_k = remember { mutableStateOf("") }
+        val xk = remember { mutableStateOf("") }
         val error = remember { mutableStateOf("") }
         val bandera = remember { mutableStateOf("") }
         val context = LocalContext.current
@@ -64,13 +65,13 @@ fun BodyNewtonRaphson() {
         Row {
             OutlinedTextField(
                 label = { Text(text = "X") },
-                value = x_k.value,
+                value = xk.value,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
                 onValueChange = {
-                    x_k.value = it
+                    xk.value = it
                 },
                 shape = RoundedCornerShape(size = 8.dp),
                 modifier = Modifier.size(width = 80.dp, height = 60.dp)
@@ -94,19 +95,40 @@ fun BodyNewtonRaphson() {
 
         }
 
-        Button(
-            onClick = {
-                if (x_k.value.isEmpty() || funcion.value.isEmpty()) {
-                    Toast.makeText(context, "No deje datos vacios", Toast.LENGTH_SHORT).show()
-                } else {
-                    bandera.value = x_k.value
-                    Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT).show()
-                }
-            }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
         ) {
-            Text(text = "Calcular", color = Color.White)
-        }
+            Button(
+                onClick = {
+                    if (xk.value.isEmpty() || funcion.value.isEmpty()) {
+                        Toast.makeText(context, "No deje datos vacios", Toast.LENGTH_SHORT).show()
+                    } else {
+                        bandera.value = xk.value
+                        Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            ) {
+                Text(text = "Calcular", color = Color.White)
+            }
 
+            Spacer(modifier = Modifier.width(8.dp))
+            // Nuevo botón para limpiar los campos
+            Button(
+                onClick = {
+                    funcion.value = ""
+                    xk.value = ""
+                    error.value = ""
+                    bandera.value = ""
+                    Toast.makeText(context, "Campos limpios", Toast.LENGTH_SHORT).show()
+                }
+            ) {
+                androidx.compose.material3.Text(text = "Limpiar")
+            }
+
+
+        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -115,11 +137,11 @@ fun BodyNewtonRaphson() {
                 Text(text = "Al llenar todas las casillas, oprima el boton 'calcular'")
             } else {
                 NewtonRaphson(
-                    x = x_k.value.toDouble(),
+                    x = xk.value.toDouble(),
                     f = funcion.value,
                     error = error.value.toDouble()
 
-                    )
+                )
 
             }
         }

@@ -1,5 +1,6 @@
 package com.example.mathsus.ui.features
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,13 +24,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
+import com.example.mathsus.R
 import com.example.mathsus.ui.methods.FAB
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -301,7 +305,18 @@ fun Information() {
             modifier = Modifier.padding(top = 8.dp), textAlign = TextAlign.Justify
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.mathsus),
+            contentDescription = "",
+            modifier = Modifier
+                .fillMaxWidth(0.8f)
+                .aspectRatio(1.5f),
+            contentScale = ContentScale.Fit
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = "GitHub",

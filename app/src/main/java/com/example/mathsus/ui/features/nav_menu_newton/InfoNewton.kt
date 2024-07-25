@@ -51,8 +51,6 @@ fun InformationNewton(navController: NavHostController) {
             }
         },
         bottomBar = { BottomNavBarNewton(navController = navController) },
-
-        //floatingActionButton = { FAB(navController = navController) }
     )
 }
 

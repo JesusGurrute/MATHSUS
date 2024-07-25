@@ -50,8 +50,6 @@ fun ExerciseNewton(navController: NavHostController) {
             }
         },
         bottomBar = { BottomNavBarNewton(navController = navController) },
-
-        //floatingActionButton = { FAB(navController = navController) }
     )
 }
 

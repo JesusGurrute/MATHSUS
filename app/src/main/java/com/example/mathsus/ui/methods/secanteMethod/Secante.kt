@@ -1,52 +1,97 @@
 package com.example.mathsus.ui.methods.secanteMethod
 
-import androidx.compose.foundation.layout.Box
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.mathsus.ui.methods.Metodo
 import org.mariuszgromada.math.mxparser.mathcollection.MathFunctions.abs
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun Secante(
     a: Double,
     b: Double,
     f: String,
-    error: Double,
-    maxIterations: Int
+    epsilon: Double,
 ) {
-    var xiPlus1: Double? = null
-    var root: Double? = null
-    var contador = 0
-    var error: Double
-    var maxIterations = maxIterations
+    var k = 0
+    var currentA = a
+    var currentB = b
+    var fa = Metodo(a = a, f = f)
+    var fb = Metodo(a = b, f = f)
+    var d: Double
 
-    Box(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        Column {
+    Column {
 
-            Row {
-                Text(text = " k ")
-                Text(text = "    x_k       ")
-                Text(text = "    x_(k-1)       ")
-                Text(text = "     f(x_k)     ")
+        Row {
+            Text(text = " k ")
+            Text(text = "      x_k       ")
+             Text(text = "            f(x_k)     ")
+        }
+
+        if (abs(fa) > abs(fb)) {
+            currentA = currentB.also { currentB = currentA }
+            fa = fb.also { fb = fa }
+        }
+
+        for (iteration in 1..200) {
+
+            val roundcurrentA = String.format("%.4e", currentA)
+            val partcurrentA = roundcurrentA.split("e")
+            val coefficientcurrentA = partcurrentA[0].toDouble()
+            val currentACoefficient = if (coefficientcurrentA % 1 == 0.0) {
+                coefficientcurrentA.toInt().toString()
+            } else {
+                partcurrentA[0].replace(Regex("0*$"), "")
             }
 
-            val fa = Metodo(a = a, f = f)
-            val fb = Metodo(a = b, f = f)
+            val roundfa = String.format("%.4e", fa)
+            val partsfa = roundfa.split("e")
+            val coefficientfa = partsfa[0].toDouble()
+            val exponentfa = partsfa[1].toInt()
+            val faCoefficient = if (coefficientfa % 1 == 0.0) {
+                coefficientfa.toInt().toString()
+            } else {
+                partsfa[0].replace(Regex("0*$"), "")
+            }
 
-            for (iteration in 1..maxIterations) {
+            Row {
+                Text(text = " $k ")
+                Text(text = "    $currentACoefficient    ")
+                Text(text = "                         $faCoefficient * 10^$exponentfa     ")
+            }
+            if (abs(fa) > abs(fb)) {
+                currentA = currentB.also { currentB = currentA }
+                fa = fb.also { fb = fa }
+            }
+            d = (currentB - currentA) / (fb - fa)
+            currentB = currentA
+            fb = fa
+            d *= fa
+            if (abs(d) < epsilon) {
+                Text("La función $f tiene raiz real en $currentA")
+                break
+            }
+            currentA -= d
+            fa = Metodo(a = currentA, f = f)
+            k++
+        }
+    }
+}
+
+
+
+/*
+
+var xiPlus1: Double? = null
+    var root: Double? = null
+    var contador = 0
+
+
+for (iteration in 1..200) {
                 contador++
 
                 val roundxi_1 = String.format("%.4f", a)
@@ -84,6 +129,4 @@ fun Secante(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(text = "La raíz de f(x) = $f es $roundroot ")
             }
-        }
-    }
-}
+ */

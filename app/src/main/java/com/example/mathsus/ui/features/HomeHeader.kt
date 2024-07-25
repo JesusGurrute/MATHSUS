@@ -40,7 +40,7 @@ fun HomeHeader(
             contentDescription = "Home header background", // Provide a descriptive content descriptioncontentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp),
+                .height(300.dp),
             contentScale = ContentScale.Crop
         )
         Column(
@@ -52,9 +52,8 @@ fun HomeHeader(
             Text(
                 text = method,
                 color = Color.Red,
-                //color = rojounicaucaColor,
-                fontFamily = OverPassFontFamily,
-                fontWeight = FontWeight.Medium,
+                //fontFamily = OverPassFontFamily,
+                //fontWeight = FontWeight.Medium,
                 fontSize = 26.sp,
                 lineHeight = 32.sp,
                 letterSpacing = (-1).sp,
@@ -67,11 +66,10 @@ fun HomeHeader(
 
             Text(
                 text = description,
-                color = Color.DarkGray,
-                //color = azulunicaucaColor,
-                fontFamily = OverPassFontFamily,
-                fontWeight = FontWeight.Light,
-                fontSize = 12.sp,
+                color = Color.Black,
+                //fontFamily = OverPassFontFamily,
+                //fontWeight = FontWeight.Light,
+                fontSize = 15.sp,
                 lineHeight = 20.sp,
                 letterSpacing = ((-0.2).sp),
                 modifier = Modifier

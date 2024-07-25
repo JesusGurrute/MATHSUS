@@ -35,7 +35,7 @@ fun SecanteScreen(navController: NavHostController) {
             HomeHeader(
                 "Método de la secante",
                 "Este método imita el de Newton pero evita el cálculo de derivadas.\n" +
-                        "Las expresiones que puede usar son: sen(x), cos(x), tan(x), cot(x), sec(x), csc(x), log(x), ln(x), x^,e, pi, sqrt(x) y composición de estas teniendo en cuenta el uso correcto de los paréntesis con puntuacion en decimales en vez de comas."
+                        "\nUse paréntesis para agrupar operaciones: (a + b) * (c + d), evite espacios inecesarios, use punto décimal y no la coma, use constantes definidas como pi (phi) o e (número áureo) y use funciones trigonométricas con sus nombres en inglés: sin(x) y no sen(x)."
             )
         },
         content = { padding ->

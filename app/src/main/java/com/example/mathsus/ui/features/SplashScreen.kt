@@ -100,6 +100,7 @@ fun SplashScreen(navController: NavController) {
                 fontSize = 18.sp,
                 lineHeight = 24.sp,
                 letterSpacing = (-0.1).sp,
+                color = Color.Black,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),

@@ -36,11 +36,11 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 fun BodySecante() {
 
-    val WallSecante =
+    val wallSecante =
         "https://kodular-community.s3.dualstack.eu-west-1.amazonaws.com/original/3X/c/e/ce82ada4d9e8591f01abefebfab0dba4a8228eee.png"
     Box {
         Image(
-            painter = rememberAsyncImagePainter(model = WallSecante),
+            painter = rememberAsyncImagePainter(model = wallSecante),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxWidth(),
@@ -55,15 +55,12 @@ fun BodySecante() {
 
         ) {
 
-            var f = remember { mutableStateOf("") }
-            var a = remember { mutableStateOf("") }
-            var b = remember { mutableStateOf("") }
-            var x2 = remember { mutableStateOf("") }
-            var bandera = remember { mutableStateOf("")  }
-            var maxIterations = 100
-            var context = LocalContext.current
-
-            var listaAnalisisNum = listOf("Secante", "prueba", "otra")
+            val f = remember { mutableStateOf("") }
+            val a = remember { mutableStateOf("") }
+            val b = remember { mutableStateOf("") }
+            val x2 = remember { mutableStateOf("") }
+            val bandera = remember { mutableStateOf("")  }
+            val context = LocalContext.current
 
             OutlinedTextField(
                 label = { Text(text = "Ingrese la Funcion") },
@@ -150,11 +147,29 @@ fun BodySecante() {
                         a = a.value.toDouble(),
                         b = b.value.toDouble(),
                         f = f.value,
-                        error = x2.value.toDouble(),
-                        maxIterations = maxIterations)
+                        epsilon = x2.value.toDouble()
+                    )
                 }
             }
         }
     }
 
 }
+
+/*
+                           // Mostrar la gráfica
+                           if (f.value.isNotEmpty()) {
+                               Text("Dibujando gráfica para: ${f.value}") // Mensaje de depuración
+
+
+                           if (bandera2.value.isNotEmpty()) {  // Cambiado a bandera2
+                               FunctionGraph(
+                                   funcion = f.value,  // Cambiado a f.value
+                                   initialZoom = zoom,
+                                   modifier = Modifier
+                                       .height(300.dp)
+                                       .fillMaxWidth()
+                               )
+                           }
+                            */
+

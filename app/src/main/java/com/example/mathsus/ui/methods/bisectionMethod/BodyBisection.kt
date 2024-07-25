@@ -1,7 +1,6 @@
 package com.example.mathsus.ui.methods.bisectionMethod
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,11 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -31,9 +27,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.mathsus.ui.methods.FunctionGraph
-
 
 @Composable
 fun BodyBisection() {
@@ -48,7 +41,139 @@ fun BodyBisection() {
     val context = LocalContext.current
     val zoom = remember { mutableFloatStateOf(1f) }
 
-    LazyColumn(
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .statusBarsPadding()
+                .padding(16.dp)
+        ) {
+            OutlinedTextField(
+                label = { Text(text = "Ingrese la función",color = Color.Black) },
+                value = funcion.value,
+                onValueChange = {
+                    if (funcion.value.length <= 30)
+                        funcion.value = it
+                },
+                shape = RoundedCornerShape(size = 8.dp)
+            )
+            Row {
+                OutlinedTextField(
+                    label = { Text(text = "a", color = Color.Black) },
+                    value = a.value,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Sentences,
+                        keyboardType = KeyboardType.Number
+                    ),
+                    onValueChange = {
+                        a.value = it
+                    },
+                    shape = RoundedCornerShape(size = 8.dp),
+                    modifier = Modifier.size(width = 80.dp, height = 60.dp)
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                OutlinedTextField(
+                    label = { Text(text = "b", color = Color.Black) },
+                    value = b.value,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Sentences,
+                        keyboardType = KeyboardType.Number
+                    ),
+                    onValueChange = {
+                        b.value = it
+                    },
+                    shape = RoundedCornerShape(size = 8.dp),
+                    modifier = Modifier.size(width = 80.dp, height = 60.dp)
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                OutlinedTextField(
+                    label = { Text(text = "Error",color = Color.Black) },
+                    value = error.value,
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Sentences,
+                        keyboardType = KeyboardType.Number
+                    ),
+                    onValueChange = {
+                        error.value = it
+                    },
+                    shape = RoundedCornerShape(size = 8.dp),
+                    modifier = Modifier.size(width = 80.dp, height = 60.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+            ) {
+                Button(
+                    onClick = {
+                        if (a.value.isEmpty() || b.value.isEmpty() || error.value.isEmpty() || funcion.value.isEmpty()) {
+                            Toast.makeText(
+                                context,
+                                "No deje datos vacios",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        } else {
+                            bandera1.value = a.value
+                            Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                ) {
+                    Text(text = "Calcular")
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                // Nuevo botón para limpiar los campos
+                Button(
+                    onClick = {
+                        funcion.value = ""
+                        a.value = ""
+                        b.value = ""
+                        error.value = ""
+                        bandera1.value = ""
+                        Toast.makeText(context, "Campos limpios", Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    Text(text = "Limpiar")
+                }
+            }
+
+            if (bandera1.value.isEmpty()) {
+                Text(
+                    text = "Al llenar todas las casillas, oprima el boton 'calcular'",
+                    color = Color.Black,
+                    modifier = Modifier.padding(16.dp)
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Bisection(
+                        f = funcion.value,
+                        a = a.value.toDouble(),
+                        b = b.value.toDouble(),
+                        epsilon = error.value.toDouble(),
+                    )
+                }
+            }
+        }
+    }
+}
+
+/*
+LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
@@ -67,115 +192,6 @@ fun BodyBisection() {
                         end.linkTo(parent.end)
                     }
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .statusBarsPadding()
-                            .padding(16.dp)
-                    ) {
-                        OutlinedTextField(
-                            label = { Text(text = "Ingrese la función") },
-                            value = funcion.value,
-                            onValueChange = {
-                                if (funcion.value.length <= 30)
-                                    funcion.value = it
-                            },
-                            shape = RoundedCornerShape(size = 8.dp)
-                        )
-                        Row {
-                            OutlinedTextField(
-                                label = { Text(text = "a") },
-                                value = a.value,
-                                keyboardOptions = KeyboardOptions(
-                                    capitalization = KeyboardCapitalization.Sentences,
-                                    keyboardType = KeyboardType.Number
-                                ),
-                                onValueChange = {
-                                    a.value = it
-                                },
-                                shape = RoundedCornerShape(size = 8.dp),
-                                modifier = Modifier.size(width = 80.dp, height = 60.dp)
-                            )
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            OutlinedTextField(
-                                label = { Text(text = "b") },
-                                value = b.value,
-                                keyboardOptions = KeyboardOptions(
-                                    capitalization = KeyboardCapitalization.Sentences,
-                                    keyboardType = KeyboardType.Number
-                                ),
-                                onValueChange = {
-                                    b.value = it
-                                },
-                                shape = RoundedCornerShape(size = 8.dp),
-                                modifier = Modifier.size(width = 80.dp, height = 60.dp)
-                            )
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            OutlinedTextField(
-                                label = { Text(text = "Error") },
-                                value = error.value,
-                                keyboardOptions = KeyboardOptions(
-                                    capitalization = KeyboardCapitalization.Sentences,
-                                    keyboardType = KeyboardType.Number
-                                ),
-                                onValueChange = {
-                                    error.value = it
-                                },
-                                shape = RoundedCornerShape(size = 8.dp),
-                                modifier = Modifier.size(width = 80.dp, height = 60.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                        }
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
-                        ) {
-                            Button(
-                                onClick = {
-                                    if (a.value.isEmpty() || b.value.isEmpty() || error.value.isEmpty() || funcion.value.isEmpty()) {
-                                        Toast.makeText(
-                                            context,
-                                            "No deje datos vacios",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
-                                    } else {
-                                        bandera1.value = a.value
-                                        Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            ) {
-                                Text(text = "Calcular")
-                            }
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            Button(
-                                onClick = {
-                                    if (funcion.value.isEmpty()) {
-                                        Toast.makeText(
-                                            context,
-                                            "Ingrese el la función a calcular",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        bandera2.value = funcion.value
-                                        Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            ) {
-                                Text(text = "Graficar")
-                            }
-                        }
-                    }
                 }
 
                 Box(
@@ -187,23 +203,7 @@ fun BodyBisection() {
                             end.linkTo(parent.end)
                         }
                 ) {
-                    Column {
-                        if (bandera1.value.isEmpty()) {
-                            Text(text = "Al llenar todas las casillas, oprima el boton 'calcular' ")
-                        } else {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            ) {
-                                Bisection(
-                                    f = funcion.value,
-                                    a = a.value.toDouble(),
-                                    b = b.value.toDouble(),
-                                    epsilon = error.value.toDouble(),
-                                )
-                            }
-                        }
-                    }
+
                 }
 
                 Box(
@@ -223,11 +223,31 @@ fun BodyBisection() {
             }
         }
     }
-}
+ */
 
 
 
 
+/*
+Button(
+                onClick = {
+                    if (funcion.value.isEmpty()) {
+                        Toast.makeText(
+                            context,
+                            "Ingrese el la función a calcular",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        bandera2.value = funcion.value
+                        Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            ) {
+                Text(text = "Graficar")
+            }
+
+ */
 
 
 
