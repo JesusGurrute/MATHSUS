@@ -1,10 +1,10 @@
 package com.example.mathsus.ui.methods.secanteMethod
 
 import android.annotation.SuppressLint
+import androidx.compose.material3.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.example.mathsus.ui.methods.Metodo
 import org.mariuszgromada.math.mxparser.mathcollection.MathFunctions.abs

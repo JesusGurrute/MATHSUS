@@ -1,77 +1,33 @@
 [versions]
-activityComposeVersion = "1.4.0"
-agp = "8.5.0"
-androidxActivityActivityCompose = "1.9.0"
-androidxActivityActivityCompose2 = "1.6.0"
-androidxActivityCompose = "1.3.0"
-androidxActivityComposeVersion = "1.3.0-alpha06"
-androidxLifecycleRuntimeKtx = "2.3.1"
-androidxMaterial = "1.0.0"
-coilCompose = "2.2.2"
-coilComposeVersion = "x.y.z"
-coilKtCoilCompose = "2.4.0"
-coilKtCoilComposeVersion = "2.6.0"
-constraintlayout = "2.2.0-alpha13"
+appcompat = "1.7.0"
+material = "1.12.0"
+mxparser = "6.0.0"
+ycharts = "2.1.0"
+compose-material-icons = "1.6.8"
+agp = "8.5.1"
+kotlin = "1.9.0"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+junitExt = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
+composeBom = "2024.06.00"
+navigationCompose = "2.7.7"
+material3 = "1.2.1"
+coilCompose = "2.6.0"
 constraintlayoutCompose = "1.1.0-alpha13"
 exoplayer = "2.19.1"
-kotlin = "1.9.0"
-coreKtx = "1.10.1"
-junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.6.1"
-activityCompose = "1.8.0"
-composeBom = "2023.08.00"
-lifecycleRuntimeKtxVersion = "2.6.0"
-material3 = "1.2.1"
-material3Version = "1.0.0"
-materialIconsCore = "1.6.8"
-materialVersion = "1.4.0"
-mathparserOrgMxparser = "6.0.0"
-navigationCompose = "2.7.7"
-navigationFragmentKtx = "2.7.7"
-navigationUiKtx = "2.7.7"
 accompanistInsets = "0.30.1"
-accompanistInsetsUi = "0.34.0"
-runtimeLivedata = "1.6.8"
-ui = "1.6.8"
-uiGraphics = "<latest_version>"
-uiTooling = "1.6.8"
-uiToolingPreview = "1.6.8"
-uiToolingPreviewVersion = "1.0.0"
-uiVersion = "1.0.0"
-ycharts = "2.1.0"
-material = "1.4.3"
+compose = "1.6.8"
+kotlinxCoroutinesAndroid = "1.7.3"
 
 [libraries]
-androidx-activity-compose-v130 = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityCompose" }
-androidx-activity-compose-v130alpha06 = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityComposeVersion" }
-androidx-activity-compose-v140 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
-androidx-activity-compose-v160 = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityActivityCompose2" }
-androidx-activity-compose-v190 = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityActivityCompose" }
-androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
-androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-lifecycle-runtime-ktx-v231 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntimeKtx" }
-androidx-lifecycle-runtime-ktx-v260 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
-androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
-androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
-androidx-material-v100 = { module = "androidx.compose.material:material", version.ref = "androidxMaterial" }
-androidx-material-v140 = { module = "androidx.compose.material:material", version.ref = "materialVersion" }
-androidx-material3-v100 = { module = "androidx.compose.material3:material3", version.ref = "material3Version" }
-androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
-androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
-androidx-ui-tooling-preview-v100 = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreviewVersion" }
-androidx-ui-v100 = { module = "androidx.compose.ui:ui", version.ref = "uiVersion" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-coil-compose-v240 = { module = "io.coil-kt:coil-compose", version.ref = "coilKtCoilCompose" }
-coil-compose-v260 = { module = "io.coil-kt:coil-compose", version.ref = "coilKtCoilComposeVersion" }
-coil-compose-vxyz = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
-exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
-exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoplayer" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitExt" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -82,20 +38,20 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
+exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
+exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoplayer" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 accompanist-insets = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanistInsets" }
-accompanist-insets-ui = { group = "com.google.accompanist", name = "accompanist-insets-ui", version.ref = "accompanistInsetsUi" }
-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
-mathparser-org-mxparser = { module = "org.mariuszgromada.math:MathParser.org-mXparser", version.ref = "mathparserOrgMxparser" }
-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
-ui-graphics = { module = "org.jetbrains.compose.ui:ui-graphics", version.ref = "uiGraphics" }
-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }
-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+mathparser-org-mxparser = { module = "org.mariuszgromada.math:MathParser.org-mXparser", version.ref = "mxparser" }
 ycharts = { module = "co.yml:ycharts", version.ref = "ycharts" }
-androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "compose-material-icons" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-material-icons" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-

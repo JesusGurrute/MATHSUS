@@ -6,18 +6,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.BottomNavigation
+import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.BottomNavigationItem
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Icon
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.LocalLibrary
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +26,7 @@ import com.example.mathsus.ui.methods.bisectionMethod.BodyBisection
 @Composable
 fun BisectionScreen(navController: NavHostController) {
 
-    androidx.compose.material.Scaffold(
+    Scaffold(
 
         topBar = {
             HomeHeader(
@@ -61,37 +58,36 @@ fun BisectionScreen(navController: NavHostController) {
 
 @Composable
 fun BottomNavBarBisection(navController: NavController) {
-    BottomNavigation(
-        backgroundColor = Color.White,
-        elevation = 8.dp
+    NavigationBar(
+        containerColor = Color.White, // Cambia backgroundColor por containerColor
+        tonalElevation = 8.dp // Cambia elevation por tonalElevation
     ) {
-        BottomNavigationItem(
+        NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
             label = { Text("Inicio") },
             selected = false, // Cambia esto según la navegación actual
             onClick = { navController.navigate("splash") }
         )
-        BottomNavigationItem(
-            icon = { Icon(Icons.Default.Calculate, contentDescription = "Calculadora") },
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.PlayArrow, contentDescription = "Calculadora") },
             label = { Text("Calculadora") },
-            selected = false, // Cambia esto según la navegación actual
+            selected = false,
             onClick = { navController.navigate("bisection") }
         )
-        BottomNavigationItem(
+        NavigationBarItem(
             icon = { Icon(Icons.Default.Info, contentDescription = "Información") },
             label = { Text("Método") },
             selected = false,
             onClick = { navController.navigate("infoBisection") }
         )
-        BottomNavigationItem(
-            icon = { Icon(Icons.Default.LocalLibrary, contentDescription = "") },
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Edit, contentDescription = "Ejercicios") },
             label = { Text("Ejercicios") },
             selected = false,
             onClick = { navController.navigate("exerciseBisection") }
         )
     }
 }
-
 
 /*
 

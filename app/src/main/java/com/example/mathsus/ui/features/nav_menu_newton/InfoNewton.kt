@@ -11,10 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +29,7 @@ import com.example.mathsus.ui.features.BottomNavBarNewton
 @Composable
 fun InformationNewton(navController: NavHostController) {
 
-    androidx.compose.material.Scaffold(
+    Scaffold(
 
         content = { padding ->
 
@@ -67,13 +66,13 @@ fun InfoNewton() {
         Text(
             text = "Método de Newton",
             color = Color.Blue,
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
         Text(
             text = "Interpretaciones del método de Newton",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 

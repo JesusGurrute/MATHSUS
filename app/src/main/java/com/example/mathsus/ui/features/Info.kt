@@ -12,12 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Scaffold
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -265,7 +263,7 @@ fun Information() {
 
         Text(
             text = "Referencias adicionales",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Justify
         )
 

@@ -15,9 +15,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.OutlinedTextField
+import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -124,7 +123,7 @@ fun BodyNewtonRaphson() {
                     Toast.makeText(context, "Campos limpios", Toast.LENGTH_SHORT).show()
                 }
             ) {
-                androidx.compose.material3.Text(text = "Limpiar")
+                Text(text = "Limpiar")
             }
 
 

@@ -6,18 +6,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.BottomNavigation
+import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.BottomNavigationItem
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Icon
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.LocalLibrary
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +27,7 @@ import com.example.mathsus.ui.methods.secanteMethod.BodySecante
 @Composable
 fun SecanteScreen(navController: NavHostController) {
 
-    androidx.compose.material.Scaffold(
+    Scaffold(
 
         topBar = {
             HomeHeader(
@@ -60,31 +58,39 @@ fun SecanteScreen(navController: NavHostController) {
 
 @Composable
 fun BottomNavBarSecante(navController: NavController) {
-    BottomNavigation(
-        backgroundColor = Color.White,
-        elevation = 8.dp
+    NavigationBar(
+        containerColor = Color.White,
+        tonalElevation = 8.dp
     ) {
-        BottomNavigationItem(
+        NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
             label = { Text("Inicio") },
             selected = false, // Cambia esto según la navegación actual
             onClick = { navController.navigate("splash") }
         )
-        BottomNavigationItem(
-            icon = { Icon(Icons.Default.Calculate, contentDescription = "Calculadora") },
-            label = { Text("Calculadora") },
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.PlayArrow, contentDescription = "Método") },
+            label = { Text("Método") },
             selected = false, // Cambia esto según la navegación actual
             onClick = { navController.navigate("secante") }
         )
-        BottomNavigationItem(
+
+        NavigationBarItem(
+            icon = { Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Paso a paso") },
+            label = { Text("Paso a paso") },
+            selected = false,
+            onClick = { navController.navigate("pasoSecante") }
+        )
+
+        NavigationBarItem(
             icon = { Icon(Icons.Default.Info, contentDescription = "Información") },
-            label = { Text("Método") },
+            label = { Text("Info") },
             selected = false,
             onClick = { navController.navigate("infoSecante") }
         )
-        BottomNavigationItem(
-            icon = { Icon(Icons.Default.LocalLibrary, contentDescription = "") },
-            label = { Text("Ejercicios") },
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Menu, contentDescription = "Ejercicios") },
+            label = { Text("Practica") },
             selected = false,
             onClick = { navController.navigate("exerciseSecante") }
         )

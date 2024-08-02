@@ -23,6 +23,7 @@ import com.example.mathsus.ui.features.nav_menu_newton.ExerciseNewton
 import com.example.mathsus.ui.features.nav_menu_newton.InformationNewton
 import com.example.mathsus.ui.features.nav_menu_secante.ExerciseSecante
 import com.example.mathsus.ui.features.nav_menu_secante.InformationSecante
+import com.example.mathsus.ui.features.nav_menu_secante.PasoSecante
 import com.example.mathsus.ui.theme.MATHSUSTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,17 +46,9 @@ class MainActivity : ComponentActivity() {
                         startDestination = "splash"
                     ) {
 
-                        composable(route = "splash") {
-                            SplashScreen(navController = navController)
-                        }
-
-                        composable(route = "bisection") {
-                            BisectionScreen(navController = navController)
-                        }
-
-                        composable(route = "newton") {
-                            NewtonScreen(navController = navController)
-                        }
+                        composable(route = "splash") { SplashScreen(navController = navController) }
+                        composable(route = "bisection") { BisectionScreen(navController = navController) }
+                        composable(route = "newton") { NewtonScreen(navController = navController) }
 
                         composable(route = "secante") {
                             SecanteScreen(navController = navController)
@@ -87,6 +80,10 @@ class MainActivity : ComponentActivity() {
 
                         composable(route = "exerciseBisection") {
                             ExerciseBisection(navController = navController)
+                        }
+
+                        composable(route = "pasoSecante") {
+                            PasoSecante(navController = navController)
                         }
                     }
 

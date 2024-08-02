@@ -91,7 +91,7 @@ fun NewtonRaphson(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            androidx.compose.material.Text(text = "El polinomio $f tiene una raiz real en $x_k")
+            Text(text = "El polinomio $f tiene una raiz real en $x_k")
         }
     }
 }

@@ -12,11 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Divider
+import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.MaterialTheme
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +30,7 @@ import com.example.mathsus.ui.features.BottomNavBarSecante
 @Composable
 fun InformationSecante(navController: NavHostController) {
 
-    androidx.compose.material.Scaffold(
+    Scaffold(
 
         content = { padding ->
 
@@ -68,13 +66,13 @@ fun InfoSecante() {
         Text(
             text = "Método de la secante",
             color = Color.Blue,
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
         Text(
             text = "Interpretaciones del método de la secante",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -253,13 +251,13 @@ fun InfoSecante() {
 
         Text(
             text = "Resumen",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.bodyMedium,
             color = Color.Blue,
             modifier = Modifier.padding(bottom = 16.dp),
             textAlign = TextAlign.Justify
         )
 
-        Divider(color = Color.Blue, thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp, color = Color.Blue)
 
         Spacer(modifier = Modifier.height(16.dp))
 

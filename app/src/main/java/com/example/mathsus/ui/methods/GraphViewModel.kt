@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,30 +17,71 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.mariuszgromada.math.mxparser.Expression
+import org.mariuszgromada.math.mxparser.Function
 
 import kotlin.math.min
 
-//fun FunctionGraph(funcion: String, zoom: Float)
+class GraphViewModel : ViewModel() {
+    var functionString by mutableStateOf("")
+    var shouldShowGraph by mutableStateOf(false)
+    var points by mutableStateOf<List<Pair<Float, Float>>>(emptyList())
+
+    fun llamarGraphCoroutine(function: String) {
+        viewModelScope.launch {
+            functionString = function
+            shouldShowGraph = true
+            calculatePoints()
+        }
+    }
+
+    suspend fun calculatePoints() {
+        val mxFunction = Function("f", functionString, "x")
+        points = withContext(Dispatchers.Default) {
+            (-1000..1000 step 10).mapNotNull { x ->
+                val xVal = x / 100f
+                val yVal = calcularFuncionOptimized(xVal.toDouble(), mxFunction)
+                if (yVal.isFinite()) Pair(xVal, yVal.toFloat()) else null
+            }
+        }
+    }
+
+    private fun calcularFuncionOptimized(a: Double, funcion: Function): Double {
+        val expresion = Expression("f($a)", funcion)
+        return expresion.calculate()
+    }
+}
+
+
 @SuppressLint("AutoboxingStateCreation")
 @Composable
 fun FunctionGraph(
-    funcion: String,
+    viewModel: GraphViewModel,
     initialZoom: Float = 1f,
-    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier  // Añadimos este parámetro
+    modifier: Modifier = Modifier
 ) {
     var scale by remember { mutableStateOf(initialZoom) }
     var offset by remember { mutableStateOf(Offset.Zero) }
+
     val state = rememberTransformableState { zoomChange, offsetChange, _ ->
         scale *= zoomChange
         offset += offsetChange
     }
 
+    LaunchedEffect(viewModel.functionString) {
+        viewModel.calculatePoints()
+    }
+
     Box(
-        modifier = modifier  // Usamos el modifier aquí
+        modifier = modifier
             .fillMaxSize()
             .transformable(state = state)
     ) {
@@ -48,12 +90,12 @@ fun FunctionGraph(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            drawFunction(funcion, scale, offset)
+            drawFunction(viewModel.points, scale, offset)
         }
     }
 }
 
-fun DrawScope.drawFunction(funcion: String, zoom: Float, offset: Offset) {
+fun DrawScope.drawFunction(points: List<Pair<Float, Float>>, zoom: Float, offset: Offset) {
     val width = size.width
     val height = size.height
     val baseScale = min(width, height) / 10f
@@ -94,18 +136,53 @@ fun DrawScope.drawFunction(funcion: String, zoom: Float, offset: Offset) {
             )
         }
 
-        // Dibujar la función con clipping
+        // Dibujar la función
+
+        if (points.isNotEmpty()) {
+            for (i in 1 until points.size) {
+                val (x1, y1) = points[i - 1]
+                val (x2, y2) = points[i]
+                drawLine(
+                    Color.Blue,
+                    Offset(width / 2 + x1 * baseScale, height / 2 - y1 * baseScale),
+                    Offset(width / 2 + x2 * baseScale, height / 2 - y2 * baseScale),
+                    2f
+                )
+            }
+        }
+
+    }
+
+}
+
+
+fun calcularFuncionOptimized(a: Double, funcion: Function): Double {
+    val expresion = Expression("f($a)", funcion)
+    return expresion.calculate()
+}
+
+
+/*
+val mxFunction = Function("f", funcion, "x")
         clipRect(0f, 0f, width, height) {
             try {
                 var lastX: Float? = null
                 var lastY: Float? = null
-                for (x in -1000..1000) {
-                    val xVal = x / 100f
-                    val yVal = calcularFuncion(xVal.toDouble(), funcion).toFloat()
 
+                val step = (2000 / zoom).toInt().coerceAtLeast(1)
+
+                // Usar withContext para mover los cálculos a un hilo de fondo
+                val points = withContext(Dispatchers.Default) {
+                    (-1000..1000 step step).map { x ->
+                        val xVal = x / 100.0
+                        val yVal = calcularFuncionOptimized(xVal, mxFunction)
+                        Pair(xVal, yVal)
+                    }
+                }
+                for ((xVal, yVal) in points) {
                     if (yVal.isFinite()) {
-                        val currentX = width / 2 + xVal * baseScale
-                        val currentY = height / 2 - yVal * baseScale
+                        val currentX = width / 2 + xVal.toFloat() * baseScale
+                        val currentY = height / 2 - yVal.toFloat() * baseScale
 
                         if (lastX != null && lastY != null) {
                             drawLine(
@@ -129,9 +206,11 @@ fun DrawScope.drawFunction(funcion: String, zoom: Float, offset: Offset) {
                     "Error: Función inválida",
                     width / 4,
                     height / 2,
-                    textPaint
+                    android.graphics.Paint().apply {
+                        color = android.graphics.Color.BLACK
+                        textSize = 24f / zoom
+                    }
                 )
             }
         }
-    }
-}
+ */

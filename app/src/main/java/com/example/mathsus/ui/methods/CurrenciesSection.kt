@@ -13,18 +13,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.FloatingActionButton
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Icon
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
@@ -136,7 +131,7 @@ fun FAB(navController: NavHostController) {
         onClick = {
             navController.navigate("splash")
         },
-        backgroundColor = Color.Blue
+        containerColor = Color.Blue
     ) {
         Icon(
             imageVector = Icons.Default.Home,
