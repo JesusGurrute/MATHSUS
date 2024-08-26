@@ -2,7 +2,6 @@ package com.example.mathsus.ui.features.nav_menu_secante
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -33,25 +31,23 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarSecante
 import com.example.mathsus.ui.methods.Destinos
-import com.example.mathsus.ui.methods.secanteMethod.BodySecante
+import com.example.mathsus.ui.methods.secanteMethod.PasoBodySecante
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -70,48 +66,31 @@ fun PasoSecante(navController: NavHostController) {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Drawer(menu_items = navigationItems, navController = navController)
+                Drawer(menuItems = navigationItems, navController = navController)
             }
         }
     ) {
         Scaffold(
-            topBar = { TopBar(scope, drawerState) },
+            topBar = { TopBar("Secante paso a paso", scope, drawerState) },
             content = { padding ->
-                Column(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                ){
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        PasosDeLaSecante()
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(400.dp) // Ajusta la altura según sea necesario
-                    ) {
-                        BodySecante()
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(300.dp) // Ajusta la altura según sea necesario
-                    ) {
-                        ExplicacionSecante()
-                    }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    PasoBodySecante()
                 }
+
             },
             bottomBar = { BottomNavBarSecante(navController = navController) }
         )
+
     }
 }
+
 @Composable
-fun Drawer(menu_items: List<Destinos>, navController: NavHostController) {
+fun Drawer(menuItems: List<Destinos>, navController: NavHostController) {
     Column {
         Image(
             painterResource(id = R.drawable.menu_lateral),
@@ -121,13 +100,12 @@ fun Drawer(menu_items: List<Destinos>, navController: NavHostController) {
                 .fillMaxWidth(),
             contentScale = ContentScale.FillWidth
         )
-
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(15.dp)
         )
-        menu_items.forEach { item ->
+        menuItems.forEach { item ->
             DrawerItem(item = item, navController = navController)
         }
     }
@@ -143,7 +121,6 @@ fun DrawerItem(item: Destinos, navController: NavHostController) {
             .clip(RoundedCornerShape(12.dp))
             .clickable {
                 navController.navigate(item.ruta) {
-                    // Opcional: Configura el comportamiento de la navegación
                     launchSingleTop = true
                 }
             }
@@ -162,156 +139,35 @@ fun DrawerItem(item: Destinos, navController: NavHostController) {
             style = MaterialTheme.typography.bodyLarge
         )
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
+    title: String,
     scope: CoroutineScope,
     drawerState: DrawerState
 ) {
     TopAppBar(
-        title = { Text(text = "Secante paso a paso") },
+        title = { Text(text = title) },
         navigationIcon = {
             IconButton(onClick = {
                 scope.launch {
                     drawerState.open()
                 }
             }) {
-                Icon(imageVector = Icons.Filled.Menu, contentDescription = "Inicio de Menú")
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "Inicio de Menú",
+                    tint = Color.White
+                )
             }
-        })
-}
-
-@Composable
-fun ExplicacionSecante() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "Desde el punto de vista geométrico, el método se basa en aproximar la función:",
-                textAlign = TextAlign.Justify
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = "y = f(x)",
-                textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "por una recta secante a la gráfica de f, y usar la raíz de la recta como aproximación a la solución del problema f(x) = 0.",
-                textAlign = TextAlign.Justify
-            )
-        }
-
-
-    }
-}
-
-@Composable
-fun PasosDeLaSecante() {
-    Column {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-        ) {
-            Text(
-                text = "Pasos del método",
-                color = Color.Black, // Cambia el color a negro
-                style = TextStyle(
-                    fontSize = 20.sp, // Ajusta el tamaño según lo necesario
-                    fontWeight = FontWeight.Bold, // Aplica negrilla
-                    color = Color.Black // Asegura que el color es negro
-                ),
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "1. Para comenzar, fijamos dos valores iniciales denotados como x0 y x1.",
-                textAlign = TextAlign.Justify
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "2. Con esos dos puntos se traza la recta que es secante a f en (x0 , f(x0)) y (x1 , f(x1)), siendo f la función ingresada.",
-                textAlign = TextAlign.Justify
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Image(
-            painter = painterResource(id = R.drawable.ec0_pasosecante), // Recurso drawable
-            contentDescription = "",
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentScale = ContentScale.Crop
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = colorResource(id = R.color.azulunicauca), // Cambia el color de fondo a azul
+            titleContentColor = Color.White, // Cambia el color del texto del título a blanco
+            actionIconContentColor = Color.White // Cambia el color de los íconos a blanco
         )
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "3. Se halla el punto de corte (x2) de esta recta con el eje x (y = 0) y se despeja,",
-                textAlign = TextAlign.Justify
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Image(
-            painter = painterResource(id = R.drawable.ec1_pasosecante), // Recurso drawable
-            contentDescription = "",
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentScale = ContentScale.Crop
-        )
-    }
+    )
 }
 
-
-/*
-tittle = { Text(text = "Método de la secante paso a paso") },
-        navigationIcon = {
-            IconButton(onClick = {
-                scope.launch {
-                    scaffoldState.drawerState.open()
-                }
-            }) {
-                Icon(imageVector = Icons.Filled.Menu, contentDescription = "Inicio de Menú")
-            }
-        }
- */

@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,19 +24,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.mathsus.R
 import com.example.mathsus.ui.theme.OverPassFontFamily
 
 @Composable
 fun SplashScreen(navController: NavController) {
     val splashUrl =
         "https://i.imgur.com/gjxRu9X.png"
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -105,25 +107,24 @@ fun SplashScreen(navController: NavController) {
                     .padding(horizontal = 16.dp),
                 textAlign = TextAlign.Justify
             )
-
             Button(
                 onClick = {
                     navController.navigate("info")
                 },
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.azulunicauca)),
                 modifier = Modifier
                     .padding(8.dp, 24.dp)
                     .fillMaxWidth()
             ) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Back")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "Back"
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Conoce más")
             }
-
         }
-
     }
-
-
 }
 
 @Composable
@@ -134,6 +135,7 @@ fun VerticalButton(
 ) {
     Button(
         onClick = { onClickAction() },
+        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.azulunicauca)),
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(
