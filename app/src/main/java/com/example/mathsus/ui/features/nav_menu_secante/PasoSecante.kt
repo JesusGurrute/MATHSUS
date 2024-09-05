@@ -2,7 +2,6 @@ package com.example.mathsus.ui.features.nav_menu_secante
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -43,7 +42,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarSecante
 import com.example.mathsus.ui.methods.Destinos
@@ -61,7 +59,6 @@ fun PasoSecante(navController: NavHostController) {
         Destinos.Pantalla3,
         Destinos.Pantalla4
     )
-
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -81,7 +78,6 @@ fun PasoSecante(navController: NavHostController) {
                 ) {
                     PasoBodySecante()
                 }
-
             },
             bottomBar = { BottomNavBarSecante(navController = navController) }
         )

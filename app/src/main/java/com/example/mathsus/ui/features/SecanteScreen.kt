@@ -2,8 +2,10 @@ package com.example.mathsus.ui.features
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material3.*
@@ -64,9 +67,7 @@ fun SecanteScreen(navController: NavHostController) {
     ) {
         Scaffold(
             topBar = { TopBar("Método de la secante", scope, drawerState) },
-
             content = { padding ->
-
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = rememberAsyncImagePainter(model = splashUrl),
@@ -74,45 +75,43 @@ fun SecanteScreen(navController: NavHostController) {
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
-
-                    LazyColumn(
+                    Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(padding)
                     ) {
-                        item {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(450.dp) // Puedes ajustar la altura según sea necesario
-                            ) {
-                                BodySecante()
-                            }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(450.dp) // Puedes ajustar la altura según sea necesario
+                        ) {
+                            BodySecante()
                         }
-                        item {
-                            Box(modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier.horizontalScroll(rememberScrollState())
+                        ) {
+                            Box(modifier = Modifier.width(330.dp)) {
                                 UsoSecante()
                             }
-                        }
-                        item {
-                            Box(modifier = Modifier.fillMaxWidth()) {
-                                ExplicacionSecante()
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante1()
+                            }
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante2()
+                            }
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante3()
+                            }
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante4()
                             }
                         }
-                        item {
-                            Box(modifier = Modifier.fillMaxWidth()) {
-
-                            }
-                        }
-
                     }
                 }
             },
             bottomBar = { BottomNavBarSecante(navController = navController) },
         )
-
     }
-
 }
 
 @Composable
@@ -140,7 +139,6 @@ fun BottomNavBarSecante(navController: NavController) {
             selected = false, // Cambia esto según la navegación actual
             onClick = { navController.navigate("secante") }
         )
-
         NavigationBarItem(
             icon = {
                 Icon(
@@ -152,7 +150,6 @@ fun BottomNavBarSecante(navController: NavController) {
             selected = false,
             onClick = { navController.navigate("pasoSecante") }
         )
-
         NavigationBarItem(
             icon = {
                 Icon(
@@ -180,9 +177,9 @@ fun BottomNavBarSecante(navController: NavController) {
     }
 }
 
-
 @Composable
 fun ExplicacionSecante() {
+    val colorScheme = MaterialTheme.colorScheme
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -190,7 +187,7 @@ fun ExplicacionSecante() {
             .padding(10.dp)
             .background(
                 shape = RoundedCornerShape(16.dp),
-                color = Color.White
+                color = colorScheme.background
             )
             .navigationBarsPadding()
             .padding(10.dp)
@@ -224,29 +221,49 @@ fun ExplicacionSecante() {
 
 @Composable
 fun UsoSecante() {
+    val colorScheme = MaterialTheme.colorScheme
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(8.dp)
+            .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
+            .navigationBarsPadding()
+            .padding(8.dp)
+    ) {
+        Text(
+            text = "Función bien formada",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.rojounicauca),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = "f(x) = 2 * sin(x) + log(x, 10) - 3*x^2 + pi\n" +
+                    "Operadores: +, -, *, /, ^(potencia)",
+            fontSize = 15.sp,
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+            color = colorScheme.onBackground,
+        )
+    }
+}
+
+@Composable
+fun UsoSecante1() {
+    val colorScheme = MaterialTheme.colorScheme
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
             .padding(10.dp)
-            .background(
-                shape = RoundedCornerShape(16.dp),
-                color = Color.White
-            )
+            .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
             .navigationBarsPadding()
             .padding(10.dp)
     ) {
         Text(
-            text = "Ejemplo de una función bien formada:",
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = "f(x) = 2 * sin(x) + log(x, 10) - 3*x^2 + pi",
-            modifier = Modifier.padding(start = 16.dp, top = 8.dp)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Tenga en cuenta",
+            text = "Uso paréntesis",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.rojounicauca),
@@ -255,35 +272,104 @@ fun UsoSecante() {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "• Usa paréntesis para agrupar operaciones:\n " +
-                    "(2 + 3) * 4\n" +
-                    "• Operadores estándar: +, -, *, /, ^(potencia)"
+            text = "(2 + 3) * 4\n" +
+                    "Cierra todos los paréntesis",
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 15.sp, textAlign = TextAlign.Center,
+            color = colorScheme.onBackground,
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "• Asegúrate de cerrar todos los paréntesis"
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "• Usa el punto decimal, no la coma"
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "• Usa las funciones sin(), cos(), tan(), log(), etc. con sus nombres en inglés: sin(x),  y no  sen(x)"
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "• Puedes usar constantes predefinidas como pi, e, [phi] (número áureo)")
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "• Siempre prueba tus funciones con valores conocidos para verificar su corrección")
     }
 }
 
-/*
-topBar = {
-            HomeHeader(
-                "Método de la secante",
-                "Este método imita el de Newton pero evita el cálculo de derivadas.\n" +
-                        "\nUse paréntesis para agrupar operaciones: (a + b) * (c + d), evite espacios inecesarios, use punto décimal y no la coma, use constantes definidas como pi (phi) o e (número áureo) y use funciones trigonométricas con sus nombres en inglés: sin(x) y no sen(x)."
-            )
-        },
- */
+@Composable
+fun UsoSecante2() {
+    val colorScheme = MaterialTheme.colorScheme
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(10.dp)
+            .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
+            .navigationBarsPadding()
+            .padding(10.dp)
+    ) {
+        Text(
+            text = "Funciones en inglés",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.rojounicauca),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "sin(), cos(), tan(), log(), etc.\n" +
+                    "Usa sin(x) y no  sen(x)",
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 15.sp, textAlign = TextAlign.Center,
+            color = colorScheme.onBackground,
+        )
+    }
+}
+
+@Composable
+fun UsoSecante3() {
+    val colorScheme = MaterialTheme.colorScheme
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(10.dp)
+            .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
+            .navigationBarsPadding()
+            .padding(10.dp)
+    ) {
+        Text(
+            text = "Constantes predefinidas ",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.rojounicauca),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "pi, e, [phi] (número áureo)\n" +
+                    "Usa el punto decimal y no la coma",
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 15.sp, textAlign = TextAlign.Center,
+            color = colorScheme.onBackground,
+        )
+    }
+}
+
+@Composable
+fun UsoSecante4() {
+    val colorScheme = MaterialTheme.colorScheme
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(10.dp)
+            .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
+            .navigationBarsPadding()
+            .padding(10.dp)
+    ) {
+        Text(
+            text = "Recuerda",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.rojounicauca),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "x es la letra definida como variable\n" +
+                    "Prueba con valores conocidos",
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 15.sp, textAlign = TextAlign.Center,
+            color = colorScheme.onBackground,
+        )
+    }
+}

@@ -18,24 +18,24 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.mathsus.R
 import com.example.mathsus.ui.theme.OverPassFontFamily
 
 @Composable
 fun SplashScreen(navController: NavController) {
+    val colorScheme = MaterialTheme.colorScheme
     val splashUrl =
         "https://i.imgur.com/gjxRu9X.png"
     Box(
@@ -111,7 +111,7 @@ fun SplashScreen(navController: NavController) {
                 onClick = {
                     navController.navigate("info")
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.azulunicauca)),
+                colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
                 modifier = Modifier
                     .padding(8.dp, 24.dp)
                     .fillMaxWidth()
@@ -133,9 +133,10 @@ fun VerticalButton(
     text: String,
     onClickAction: () -> Unit
 ) {
+    val colorScheme = MaterialTheme.colorScheme
     Button(
         onClick = { onClickAction() },
-        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.azulunicauca)),
+        colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(

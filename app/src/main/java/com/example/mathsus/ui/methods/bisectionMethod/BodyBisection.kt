@@ -1,36 +1,62 @@
 package com.example.mathsus.ui.methods.bisectionMethod
 
+import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.mathsus.R
+import com.example.mathsus.ui.features.nav_menu_bisection.ResultadoBisection
+import com.example.mathsus.ui.methods.secanteMethod.CurvedBorderText
+import com.example.mathsus.ui.methods.secanteMethod.evaluarFuncion
+import kotlin.math.abs
 
 @Composable
 fun BodyBisection() {
-
+    val colorScheme = MaterialTheme.colorScheme
     val funcion = remember { mutableStateOf("") }
     val a = remember { mutableStateOf("") }
     val b = remember { mutableStateOf("") }
@@ -44,22 +70,26 @@ fun BodyBisection() {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .align(Alignment.TopStart)
+                .fillMaxWidth()
                 .statusBarsPadding()
-                .padding(16.dp)
+                .padding(10.dp)
+                .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
+                .navigationBarsPadding()
+                .padding(10.dp)
         ) {
             OutlinedTextField(
-                label = { Text(text = "Ingrese la función",color = Color.Black) },
+                label = { Text(text = "Ingrese la funcion") },
                 value = funcion.value,
                 onValueChange = {
                     if (funcion.value.length <= 30)
                         funcion.value = it
                 },
-                shape = RoundedCornerShape(size = 8.dp)
+                shape = RoundedCornerShape(size = 8.dp),
+                modifier = Modifier.fillMaxWidth()
             )
             Row {
                 OutlinedTextField(
-                    label = { Text(text = "a", color = Color.Black) },
+                    label = { Text(text = "a") },
                     value = a.value,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Sentences,
@@ -69,13 +99,11 @@ fun BodyBisection() {
                         a.value = it
                     },
                     shape = RoundedCornerShape(size = 8.dp),
-                    modifier = Modifier.size(width = 80.dp, height = 60.dp)
+                    modifier = Modifier.size(width = 100.dp, height = 60.dp)
                 )
-
                 Spacer(modifier = Modifier.width(8.dp))
-
                 OutlinedTextField(
-                    label = { Text(text = "b", color = Color.Black) },
+                    label = { Text(text = "b") },
                     value = b.value,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Sentences,
@@ -85,13 +113,11 @@ fun BodyBisection() {
                         b.value = it
                     },
                     shape = RoundedCornerShape(size = 8.dp),
-                    modifier = Modifier.size(width = 80.dp, height = 60.dp)
+                    modifier = Modifier.size(width = 100.dp, height = 60.dp)
                 )
-
                 Spacer(modifier = Modifier.width(8.dp))
-
                 OutlinedTextField(
-                    label = { Text(text = "Error",color = Color.Black) },
+                    label = { Text(text = "Error") },
                     value = error.value,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Sentences,
@@ -101,13 +127,11 @@ fun BodyBisection() {
                         error.value = it
                     },
                     shape = RoundedCornerShape(size = 8.dp),
-                    modifier = Modifier.size(width = 80.dp, height = 60.dp)
+                    modifier = Modifier.size(width = 160.dp, height = 60.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
-
             Spacer(modifier = Modifier.width(8.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -172,6 +196,523 @@ fun BodyBisection() {
     }
 }
 
+@Composable
+fun PasoBodyBisection() {
+    val colorScheme = MaterialTheme.colorScheme
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(2.dp)
+            .background(colorScheme.background)
+            //.background(shape = RoundedCornerShape(16.dp), color = Color.White)
+            .navigationBarsPadding()
+            .padding(4.dp)
+    ) {
+        Text(
+            text = "Avanza a tu propio ritmo",
+            color = colorScheme.onBackground,
+            style = TextStyle(
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        )
+        val funcion = remember { mutableStateOf("") }
+        val a = remember { mutableStateOf("") }
+        val b = remember { mutableStateOf("") }
+        val error = remember { mutableStateOf("") }
+        val bandera = remember { mutableStateOf("") }
+        val context = LocalContext.current
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Column {
+                Text(
+                    text = "1. Ingrese la función",
+                    textAlign = TextAlign.Justify,
+                    fontWeight = FontWeight.Bold,
+                    color = colorScheme.onBackground,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Ejemplo de una función bien formada:",
+                    color = colorScheme.onBackground,
+                    textAlign = TextAlign.Justify
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "f(x) = 2 * sin(x) + log(x, 10) - 3*x^2 + pi",
+                    modifier = Modifier.fillMaxWidth(),
+                    color = colorScheme.onBackground,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+        OutlinedTextField(
+            label = { Text(text = "Ingrese la funcion") },
+            value = funcion.value,
+            onValueChange = {
+                if (funcion.value.length <= 30)
+                    funcion.value = it
+            },
+            shape = RoundedCornerShape(size = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp) // Agrega un margen lateral si es necesario
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "2. Este método requiere un intervalo [a,b] donde la función sea continua y exista un cambio de signo",
+                color = colorScheme.onBackground,
+                textAlign = TextAlign.Justify
+            )
+        }
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            OutlinedTextField(
+                label = { Text(text = "a") },
+                value = a.value,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    keyboardType = KeyboardType.Number
+                ),
+                onValueChange = {
+                    a.value = it
+                },
+                shape = RoundedCornerShape(size = 8.dp),
+                modifier = Modifier.size(width = 80.dp, height = 60.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            OutlinedTextField(
+                label = { Text(text = "b") },
+                value = b.value,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    keyboardType = KeyboardType.Number
+                ),
+                onValueChange = {
+                    b.value = it
+                },
+                shape = RoundedCornerShape(size = 8.dp),
+                modifier = Modifier.size(width = 80.dp, height = 60.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            OutlinedTextField(
+                label = { Text(text = "Error") },
+                value = error.value,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    keyboardType = KeyboardType.Number
+                ),
+                onValueChange = { newValue ->
+                    // Primero reemplazamos las comas por puntos
+                    val processedValue = newValue.replace(',', '.')
+                    // Luego verificamos si el valor resultante es un número decimal válido
+                    if (processedValue.isEmpty() || processedValue.matches(Regex("^\\d*\\.?\\d*$"))) {
+                        error.value = processedValue
+                    }
+                },
+                shape = RoundedCornerShape(size = 8.dp),
+                modifier = Modifier.size(width = 130.dp, height = 60.dp)
+            )
+        }
+        var currentIndex by remember { mutableIntStateOf(0) }
+        val results = remember { mutableStateListOf<ResultadoBisection>() }
+        val totalIterations = 200
+        var shouldContinue by remember { mutableStateOf(true) }
+        results.forEach { resultado ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "Iteración: ${resultado.iteracion}",
+                        color = colorResource(id = R.color.rojounicauca),
+                        textAlign = TextAlign.Justify,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Box(
+                        modifier = Modifier
+                            .horizontalScroll(rememberScrollState())
+                            .width(400.dp)
+                    ) {
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .fillMaxWidth()
+                                    .width(IntrinsicSize.Min)
+                                    .horizontalScroll(rememberScrollState())
+                                    .background(colorScheme.background)
+                                //.background(shape = RoundedCornerShape(4.dp), color = colorResource(id = R.color.azulunicauca))
+                            ) {
+                                CurvedBorderText(
+                                    text = "x0",
+                                    textColor = Color.White,
+                                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                                    fontSize = 14.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "x1",
+                                    textColor = Color.White, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                                    fontSize = 14.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "x${resultado.iteracion + 1}",
+                                    textColor = Color.Red, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                                    fontSize = 14.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "f(x0)",
+                                    textColor = Color.White, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                                    fontSize = 14.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "f(x1)",
+                                    textColor = Color.White, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                                    fontSize = 14.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "f(x${resultado.iteracion + 1})",
+                                    textColor = Color.Red, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                                    fontSize = 14.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .width(IntrinsicSize.Min)
+                                    .horizontalScroll(rememberScrollState())
+                                    .background(
+                                        shape = RoundedCornerShape(4.dp),
+                                        color = colorResource(id = R.color.grisunicauca)
+                                    )
+                            ) {
+                                CurvedBorderText(
+                                    text = "${resultado.a}",
+                                    textColor = Color.Black, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.grisunicauca),
+                                    fontSize = 10.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "${resultado.b}",
+                                    textColor = Color.Black, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.grisunicauca),
+                                    fontSize = 10.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = resultado.c.toString(),
+                                    textColor = Color.Red,
+                                    backgroundColor = colorResource(id = R.color.grisunicauca),
+                                    fontSize = 10.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "${evaluarFuncion(resultado.a, funcion.value)}",
+                                    textColor = Color.Black, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.grisunicauca),
+                                    fontSize = 10.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "${evaluarFuncion(resultado.b, funcion.value)}",
+                                    textColor = Color.Black, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.grisunicauca),
+                                    fontSize = 10.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                                CurvedBorderText(
+                                    text = "${
+                                        evaluarFuncion(
+                                            resultado.c.toDouble(),
+                                            funcion.value
+                                        )
+                                    }",
+                                    textColor = Color.Red, // Color del texto personalizado
+                                    backgroundColor = colorResource(id = R.color.grisunicauca),
+                                    fontSize = 10.sp,
+                                    paddingStart = 20.dp,
+                                    paddingEnd = 12.dp,
+                                    paddingTop = 6.dp,
+                                    paddingBottom = 6.dp,
+                                    borderColor = Color.Black,
+                                    borderWidth = 1.dp, // Grosor del borde
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .wrapContentSize(Alignment.Center)
+                                )
+                            }
+                        }
+                    }
+                    val absx1x2 = abs(resultado.a - resultado.c)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Note que: ",
+                        color = colorScheme.onBackground,
+                        textAlign = TextAlign.Justify
+                    )
+                    Text(
+                        text = " |x1 - x${resultado.iteracion + 1}| = |${resultado.b} - ${resultado.a} | =  $absx1x2 > ${error.value.toDouble()}",
+                        color = colorScheme.onBackground,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
+                    // Aquí es donde hacemos el cambio
+                    if (absx1x2 < error.value.toDouble()) {
+                        Text(
+                            text = "La diferencia es menor a error y no se procede a calcular x${resultado.iteracion + 2}.",
+                            color = colorScheme.onBackground,
+                            textAlign = TextAlign.Justify
+                        )
+                    } else {
+                        Text(
+                            text = "De manera que, se procede a calcular x${resultado.iteracion + 2}.",
+                            color = colorScheme.onBackground,
+                            textAlign = TextAlign.Justify
+                        )
+                    }
+                }
+            }
+        }
+        if (shouldContinue) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text(
+                    text = "${currentIndex + 3}. Dado:\n" +
+                            "\na = ${a.value}\n" +
+                            "b = ${b.value}\n" +
+                            "\nse calcula el punto de corte x${currentIndex + 2} con la siguiente ecuación:",
+                    color = colorScheme.onBackground,
+                    textAlign = TextAlign.Justify
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "   a + b \n" +
+                        "  x${currentIndex + 2} =    -----------------     \n  " +
+                        "   2", modifier = Modifier.fillMaxWidth(),
+                color = colorScheme.onBackground,
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Row {
+                Box(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Para ello, oprima el botón",
+                        color = colorScheme.onBackground,
+                        textAlign = TextAlign.Justify
+                    )
+                }
+                Box {
+                    Button(
+                        onClick = {
+                            if (a.value.isEmpty() || b.value.isEmpty() || funcion.value.isEmpty() || error.value.isEmpty()) {
+                                Toast.makeText(context, "No deje datos vacíos", Toast.LENGTH_SHORT).show()
+                            } else {
+                                bandera.value = a.value
+                                Toast.makeText(context, "Calculando x${currentIndex + 2}", Toast.LENGTH_SHORT).show()
+
+                                val aDouble = a.value.toDouble()
+                                val bDouble = b.value.toDouble()
+                                val result = calcularX2Bisection(a = aDouble, b = bDouble, funcion = funcion.value)
+                                val absx1x2 = abs(bDouble - result)
+
+                                results.add(
+                                    ResultadoBisection(
+                                        currentIndex + 1,
+                                        aDouble,
+                                        bDouble,
+                                        result
+                                    )
+                                )
+                                currentIndex++
+                                // Update a and b for the next iteration
+                                if (evaluarFuncion(aDouble, funcion.value) * evaluarFuncion(result, funcion.value) < 0) {
+                                    b.value = result.toString()
+                                } else {
+                                    a.value = result.toString()
+                                }
+                                // Check if we should continue
+                                shouldContinue = currentIndex < totalIterations && absx1x2 > error.value.toDouble()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
+                        enabled = shouldContinue
+                    ) {
+                        val aux = currentIndex + 2
+                        Text(text = "Hallar x$aux")
+                    }
+                }
+            }
+        }
+        else {
+            Column {
+
+                Text(
+                    text = "La raíz de la ecuación f(x) = ${funcion.value} es:",
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = colorScheme.onBackground,
+                )
+                Text(
+                    text = "x ≈ ${results.lastOrNull()?.c ?: "No disponible"}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    color = colorScheme.onBackground,
+                )
+            }
+        }
+        if (!shouldContinue) {
+        Text(
+            text = "El proceso ha terminado.",
+            color = colorScheme.onBackground,
+            modifier = Modifier.padding(16.dp),
+            fontWeight = FontWeight.Bold
+        )
+        Button(
+            onClick = {
+                // Reiniciar todas las variables
+                funcion.value = ""
+                a.value = ""
+                b.value = ""
+                error.value = ""
+                bandera.value = ""
+                currentIndex = 0
+                results.clear()
+                shouldContinue = true
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text("Realizar nuevo cálculo")
+        }
+    }
+
+    }
+}
+@SuppressLint("DefaultLocale")
+fun calcularX2Bisection(a: Double, b: Double, funcion: String): Double {
+    val x2 = (a + b) / 2
+    return String.format("%.4f", x2).toDouble()
+}
+
 /*
 LazyColumn(
         modifier = Modifier
@@ -224,8 +765,6 @@ LazyColumn(
         }
     }
  */
-
-
 
 
 /*

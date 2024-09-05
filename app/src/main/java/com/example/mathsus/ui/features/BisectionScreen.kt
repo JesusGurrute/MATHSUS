@@ -1,88 +1,169 @@
 package com.example.mathsus.ui.features
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
+import com.example.mathsus.R
+import com.example.mathsus.ui.features.nav_menu_secante.Drawer
+import com.example.mathsus.ui.features.nav_menu_secante.TopBar
+import com.example.mathsus.ui.methods.Destinos
 import com.example.mathsus.ui.methods.bisectionMethod.BodyBisection
 
 @Composable
 fun BisectionScreen(navController: NavHostController) {
-
-    Scaffold(
-
-        topBar = {
-            HomeHeader(
-                "Método de la bisección",
-                "Este método requiere un intervalo [a,b] donde la función sea continua y exista un cambio de signo.\n" +
-                        "\nUse paréntesis para agrupar operaciones: (a + b) * (c + d), evite espacios inecesarios, use punto décimal y no la coma, use constantes definidas como pi (phi) o e (número áureo) y use funciones trigonométricas con sus nombres en inglés: sin(x) y no sen(x)."
-            )
-        },
-
-        content = { padding ->
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                ) {
-                    BodyBisection()
-                }
-            }
-        },
-        bottomBar = { BottomNavBarBisection(navController = navController) },
+    val splashUrl = "https://i.imgur.com/gjxRu9X.png"
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    val navigationItems = listOf(
+        Destinos.Pantalla1,
+        Destinos.Pantalla2,
+        Destinos.Pantalla3,
+        Destinos.Pantalla4
     )
-}
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Drawer(menuItems = navigationItems, navController = navController)
+            }
+        }
+    ) {
+        Scaffold(
+            topBar = { TopBar("Método de bisección", scope, drawerState) },
+            content = { padding ->
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Image(
+                        painter = rememberAsyncImagePainter(model = splashUrl),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(450.dp) // Puedes ajustar la altura según sea necesario
+                        ) {
+                            BodyBisection()
+                        }
+                        Row(
+                            modifier = Modifier.horizontalScroll(rememberScrollState())
+                        ) {
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante()
+                            }
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante1()
+                            }
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante2()
+                            }
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante3()
+                            }
+                            Box(modifier = Modifier.width(330.dp)) {
+                                UsoSecante4()
+                            }
+                        }
+                    }
+                }
 
+            },
+            bottomBar = { BottomNavBarBisection(navController = navController) },
+        )
+    }
+}
 @Composable
 fun BottomNavBarBisection(navController: NavController) {
     NavigationBar(
-        containerColor = Color.White, // Cambia backgroundColor por containerColor
-        tonalElevation = 8.dp // Cambia elevation por tonalElevation
+        modifier = Modifier.navigationBarsPadding(), // Añadir padding para evitar superposición con la barra de navegación
+        containerColor = colorResource(id = R.color.azulunicauca),
+        tonalElevation = 8.dp
     ) {
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
-            label = { Text("Inicio") },
+            icon = { Icon(Icons.Default.Home, contentDescription = "Inicio", tint = Color.White) },
+            label = { Text("Inicio", color = Color.White) },
             selected = false, // Cambia esto según la navegación actual
             onClick = { navController.navigate("splash") }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.PlayArrow, contentDescription = "Calculadora") },
-            label = { Text("Calculadora") },
-            selected = false,
+            icon = {
+                Icon(
+                    Icons.Default.PlayArrow,
+                    contentDescription = "Método",
+                    tint = Color.White
+                )
+            },
+            label = { Text("Método", color = Color.White) },
+            selected = false, // Cambia esto según la navegación actual
             onClick = { navController.navigate("bisection") }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Info, contentDescription = "Información") },
-            label = { Text("Método") },
+            icon = {
+                Icon(
+                    Icons.AutoMirrored.Filled.ExitToApp,
+                    contentDescription = "Paso a paso", tint = Color.White
+                )
+            },
+            label = { Text("Paso paso", color = Color.White) },
+            selected = false,
+            onClick = { navController.navigate("pasoBisection") }
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    Icons.Default.Info,
+                    contentDescription = "Información",
+                    tint = Color.White
+                )
+            },
+            label = { Text("Info", color = Color.White) },
             selected = false,
             onClick = { navController.navigate("infoBisection") }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Edit, contentDescription = "Ejercicios") },
-            label = { Text("Ejercicios") },
+            icon = {
+                Icon(
+                    Icons.Default.Menu,
+                    contentDescription = "Ejercicios",
+                    tint = Color.White
+                )
+            },
+            label = { Text("Práctica", color = Color.White) },
             selected = false,
             onClick = { navController.navigate("exerciseBisection") }
         )
@@ -90,21 +171,6 @@ fun BottomNavBarBisection(navController: NavController) {
 }
 
 /*
-
-//Ejemplo para usar un LazyColumn
-
-LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            ) {
-                item {
-                    BodyBisection()
-                }
-                item {
-                    CurrenciesSection()
-                }
-            }
 
 
         ---------------------------------------------------------------

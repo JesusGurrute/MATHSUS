@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,38 +25,55 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarNewton
+import com.example.mathsus.ui.features.nav_menu_secante.Drawer
+import com.example.mathsus.ui.features.nav_menu_secante.TopBar
+import com.example.mathsus.ui.methods.Destinos
 
 @Composable
 fun ExerciseNewton(navController: NavHostController) {
-
-    Scaffold(
-
-        content = { padding ->
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Box(
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    val navigationItems = listOf(
+        Destinos.Pantalla1,
+        Destinos.Pantalla2,
+        Destinos.Pantalla3,
+        Destinos.Pantalla4
+    )
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Drawer(menuItems = navigationItems, navController = navController)
+            }
+        }
+    ) {
+        Scaffold(
+            topBar = { TopBar("Ejercicios de cómputo", scope, drawerState) },
+            content = { padding ->
+                Column(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
+                        .fillMaxSize()
+                        .padding(padding)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    ExerNewton()
-                }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        ExerNewton()
+                    }
 
-            }
-        },
-        bottomBar = { BottomNavBarNewton(navController = navController) },
-    )
+                }
+            },
+            bottomBar = { BottomNavBarNewton(navController = navController) },
+        )
+    }
 }
 
 @Composable
 fun ExerNewton() {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,19 +81,6 @@ fun ExerNewton() {
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text = "Ejercicio de cómputo",
-            color = Color.Blue,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        Text(
-            text = "Localización de raíces de ecuaciones",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
         Text(
             text = "1. Usando el procedimiento de Newton y una sola corrida de la aplicación, pruebe su código con estos ejemplos:      f(t) = tan t – t con x₀ = 7 y e^t - sqrt(t + 9) con x₀ = 2. Imprima cada iteración y su correspondiente valor de la función.",
             textAlign = TextAlign.Justify

@@ -15,6 +15,7 @@ import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,32 +26,52 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarNewton
+import com.example.mathsus.ui.features.nav_menu_secante.Drawer
+import com.example.mathsus.ui.features.nav_menu_secante.TopBar
+import com.example.mathsus.ui.methods.Destinos
 
 @Composable
 fun InformationNewton(navController: NavHostController) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    val navigationItems = listOf(
+        Destinos.Pantalla1,
+        Destinos.Pantalla2,
+        Destinos.Pantalla3,
+        Destinos.Pantalla4
+    )
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Drawer(menuItems = navigationItems, navController = navController)
+            }
+        }
+    ) {
+        Scaffold(
+            topBar = { TopBar("Interpretación del método", scope, drawerState) },
+            content = { padding ->
 
-    Scaffold(
-
-        content = { padding ->
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Box(
+                Column(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
+                        .fillMaxSize()
+                        .padding(padding)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    InfoNewton()
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        InfoNewton()
+                    }
                 }
-            }
-        },
-        bottomBar = { BottomNavBarNewton(navController = navController) },
-    )
+            },
+            bottomBar = { BottomNavBarNewton(navController = navController) },
+        )
+    }
+
 }
 
 @Composable
@@ -63,18 +84,6 @@ fun InfoNewton() {
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text = "Método de Newton",
-            color = Color.Blue,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        Text(
-            text = "Interpretaciones del método de Newton",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
         Text(
             text = "En el método de Newton, se supone desde el principio que la función f es derivable. Esto implica que la gráfica de f tiene una pendiente definida en cada punto y, por tanto, una recta tangente única. Ahora permítanos estudiar la siguiente idea simple. En un punto dado (x₀, f(x₀)) en la gráfica de f, hay una tangente, que es una bastante buena aproximación a la curva en la vecindad del punto. Analíticamente, esto significa que la función lineal:",

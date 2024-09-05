@@ -15,6 +15,7 @@ import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,32 +26,52 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarBisection
+import com.example.mathsus.ui.features.nav_menu_secante.Drawer
+import com.example.mathsus.ui.features.nav_menu_secante.TopBar
+import com.example.mathsus.ui.methods.Destinos
 
 @Composable
 fun InformationBisection(navController: NavHostController) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    val navigationItems = listOf(
+        Destinos.Pantalla1,
+        Destinos.Pantalla2,
+        Destinos.Pantalla3,
+        Destinos.Pantalla4
+    )
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Drawer(menuItems = navigationItems, navController = navController)
+            }
+        }
+    ) {
+        Scaffold(
+            topBar = { TopBar("Interpretación del método", scope, drawerState) },
+            content = { padding ->
 
-    Scaffold(
-
-        content = { padding ->
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Box(
+                Column(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
+                        .fillMaxSize()
+                        .padding(padding)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    InfoBisection()
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        InfoBisection()
+                    }
                 }
-            }
-        },
-        bottomBar = { BottomNavBarBisection(navController = navController) },
-    )
+            },
+            bottomBar = { BottomNavBarBisection(navController = navController) },
+        )
+    }
+
 }
 
 @Composable
@@ -63,19 +84,6 @@ fun InfoBisection() {
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text = "Método de bisección",
-            color = Color.Blue,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        Text(
-            text = "Interpretaciones del método de bisección",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
         Text(
             text = "Sea f una función con valores reales o complejos de una variable real o compleja. Un número r, real o complejo, para el que f(r) = 0 se llama una raíz de la ecuación o un cero de f. Por ejemplo, la función",
             textAlign = TextAlign.Justify

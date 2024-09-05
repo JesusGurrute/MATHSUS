@@ -19,8 +19,10 @@ import com.example.mathsus.ui.features.SecanteScreen
 import com.example.mathsus.ui.features.SplashScreen
 import com.example.mathsus.ui.features.nav_menu_bisection.ExerciseBisection
 import com.example.mathsus.ui.features.nav_menu_bisection.InformationBisection
+import com.example.mathsus.ui.features.nav_menu_bisection.PasoBisection
 import com.example.mathsus.ui.features.nav_menu_newton.ExerciseNewton
 import com.example.mathsus.ui.features.nav_menu_newton.InformationNewton
+import com.example.mathsus.ui.features.nav_menu_newton.PasoNewton
 import com.example.mathsus.ui.features.nav_menu_secante.ExerciseSecante
 import com.example.mathsus.ui.features.nav_menu_secante.InformationSecante
 import com.example.mathsus.ui.features.nav_menu_secante.PasoSecante
@@ -84,6 +86,12 @@ class MainActivity : ComponentActivity() {
 
                         composable(route = "pasoSecante") {
                             PasoSecante(navController = navController)
+                        }
+                        composable(route = "pasoBisection") {
+                            PasoBisection(navController = navController)
+                        }
+                        composable(route = "pasoNewton") {
+                            PasoNewton(navController = navController)
                         }
                     }
 

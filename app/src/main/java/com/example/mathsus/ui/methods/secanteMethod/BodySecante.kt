@@ -33,7 +33,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -65,31 +64,25 @@ import kotlin.math.abs
 
 @Composable
 fun BodySecante() {
+    val colorScheme = MaterialTheme.colorScheme
     val viewModel: GraphViewModel = viewModel()
     val showGraph = remember { mutableStateOf(false) }
     //val wallSecante = "https://kodular-community.s3.dualstack.eu-west-1.amazonaws.com/original/3X/c/e/ce82ada4d9e8591f01abefebfab0dba4a8228eee.png"
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
             .padding(10.dp)
-            .background(
-                shape = RoundedCornerShape(16.dp),
-                color = Color.White
-            )
+            .background(shape = RoundedCornerShape(16.dp),color = colorScheme.background)
             .navigationBarsPadding()
             .padding(10.dp)
-
     ) {
-
         val f = remember { mutableStateOf("") }
         val a = remember { mutableStateOf("") }
         val b = remember { mutableStateOf("") }
         val x2 = remember { mutableStateOf("") }
         val bandera = remember { mutableStateOf("") }
         val context = LocalContext.current
-
         OutlinedTextField(
             label = { Text(text = "Ingrese la funcion") },
             value = f.value,
@@ -100,7 +93,6 @@ fun BodySecante() {
             shape = RoundedCornerShape(size = 8.dp),
             modifier = Modifier.fillMaxWidth()
         )
-
         Row {
             OutlinedTextField(
                 label = { Text(text = "X0") },
@@ -125,11 +117,13 @@ fun BodySecante() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
+               /*
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White,
                     disabledContainerColor = Color.White,
                 ),
+                */
 
                 onValueChange = {
                     b.value = it
@@ -146,11 +140,13 @@ fun BodySecante() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
+                /*
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White,
                     disabledContainerColor = Color.White,
                 ),
+                 */
                 onValueChange = {
                     x2.value = it
                 },
@@ -169,9 +165,7 @@ fun BodySecante() {
                         Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT).show()
                     }
                 },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.azulunicauca)
-                )
+                colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
             ) {
                 Text(text = "Calcular")
             }
@@ -182,9 +176,8 @@ fun BodySecante() {
                 onClick = {
                     viewModel.llamarGraphCoroutine(f.value)
                     showGraph.value = true
-                }, colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.azulunicauca)
-                )
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
             ) {
                 Text(text = "Graficar")
             }
@@ -390,7 +383,7 @@ fun PasoBodySecante() {
                                     .width(IntrinsicSize.Min)
                                     .horizontalScroll(rememberScrollState())
                                     .background(colorScheme.background)
-                                    //.background(shape = RoundedCornerShape(4.dp), color = colorResource(id = R.color.azulunicauca))
+                                //.background(shape = RoundedCornerShape(4.dp), color = colorResource(id = R.color.azulunicauca))
                             ) {
                                 CurvedBorderText(
                                     text = "x0",
@@ -703,7 +696,7 @@ fun PasoBodySecante() {
                     }
                 }
             }
-        }else {
+        } else {
             Column {
 
                 Text(
@@ -796,7 +789,8 @@ fun CurvedBorderText(
         color = textColor,
         fontWeight = fontWeight,
         textAlign = textAlign,
-        style = style.copy(fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize),        modifier = modifier
+        style = style.copy(fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize),
+        modifier = modifier
             .fillMaxSize()
             .background(
                 color = backgroundColor,
@@ -807,7 +801,12 @@ fun CurvedBorderText(
                 color = borderColor,
                 shape = RoundedCornerShape(borderRadius)
             )
-            .padding(start = paddingStart, end = paddingEnd, top = paddingTop, bottom = paddingBottom)
+            .padding(
+                start = paddingStart,
+                end = paddingEnd,
+                top = paddingTop,
+                bottom = paddingBottom
+            )
     )
 }
 
