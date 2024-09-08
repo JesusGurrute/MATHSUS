@@ -40,7 +40,7 @@ fun PasoBisection(navController: NavHostController) {
         }
     ) {
         Scaffold(
-            topBar = { TopBar("Secante paso a paso", scope, drawerState) },
+            topBar = { TopBar("Bisección paso a paso", scope, drawerState) },
             content = { padding ->
                 Column(
                     modifier = Modifier

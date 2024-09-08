@@ -172,7 +172,6 @@ fun BodyBisection() {
                     Text(text = "Limpiar")
                 }
             }
-
             if (bandera1.value.isEmpty()) {
                 Text(
                     text = "Al llenar todas las casillas, oprima el boton 'calcular'",
@@ -252,7 +251,7 @@ fun PasoBodyBisection() {
             }
         }
         OutlinedTextField(
-            label = { Text(text = "Ingrese la funcion") },
+            label = { Text(text = "Ingrese la función") },
             value = funcion.value,
             onValueChange = {
                 if (funcion.value.length <= 30)
@@ -269,7 +268,7 @@ fun PasoBodyBisection() {
                 .padding(16.dp)
         ) {
             Text(
-                text = "2. Este método requiere un intervalo [a,b] donde la función sea continua y exista un cambio de signo",
+                text = "2. Este método requiere un intervalo [a,b] donde la función sea continua y exista un cambio de signo. Además, un valor de error que permite finalizar el proceso.",
                 color = colorScheme.onBackground,
                 textAlign = TextAlign.Justify
             )
@@ -352,14 +351,13 @@ fun PasoBodyBisection() {
                                     .width(IntrinsicSize.Min)
                                     .horizontalScroll(rememberScrollState())
                                     .background(colorScheme.background)
-                                //.background(shape = RoundedCornerShape(4.dp), color = colorResource(id = R.color.azulunicauca))
                             ) {
                                 CurvedBorderText(
-                                    text = "x0",
+                                    text = "a",
                                     textColor = Color.White,
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
                                     fontSize = 14.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -370,11 +368,11 @@ fun PasoBodyBisection() {
                                         .wrapContentSize(Alignment.Center)
                                 )
                                 CurvedBorderText(
-                                    text = "x1",
+                                    text = "b",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
                                     fontSize = 14.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -385,11 +383,11 @@ fun PasoBodyBisection() {
                                         .wrapContentSize(Alignment.Center)
                                 )
                                 CurvedBorderText(
-                                    text = "x${resultado.iteracion + 1}",
+                                    text = "m${resultado.iteracion}",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
                                     fontSize = 14.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -400,11 +398,11 @@ fun PasoBodyBisection() {
                                         .wrapContentSize(Alignment.Center)
                                 )
                                 CurvedBorderText(
-                                    text = "f(x0)",
+                                    text = "f(a)",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
                                     fontSize = 14.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -415,11 +413,11 @@ fun PasoBodyBisection() {
                                         .wrapContentSize(Alignment.Center)
                                 )
                                 CurvedBorderText(
-                                    text = "f(x1)",
+                                    text = "f(b)",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
                                     fontSize = 14.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -430,11 +428,11 @@ fun PasoBodyBisection() {
                                         .wrapContentSize(Alignment.Center)
                                 )
                                 CurvedBorderText(
-                                    text = "f(x${resultado.iteracion + 1})",
+                                    text = "f(m${resultado.iteracion})",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
-                                    paddingStart = 20.dp,
+                                    fontSize = 10.sp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -460,7 +458,7 @@ fun PasoBodyBisection() {
                                     textColor = Color.Black, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.grisunicauca),
                                     fontSize = 10.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -475,7 +473,7 @@ fun PasoBodyBisection() {
                                     textColor = Color.Black, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.grisunicauca),
                                     fontSize = 10.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -490,7 +488,7 @@ fun PasoBodyBisection() {
                                     textColor = Color.Red,
                                     backgroundColor = colorResource(id = R.color.grisunicauca),
                                     fontSize = 10.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -505,7 +503,7 @@ fun PasoBodyBisection() {
                                     textColor = Color.Black, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.grisunicauca),
                                     fontSize = 10.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -520,7 +518,7 @@ fun PasoBodyBisection() {
                                     textColor = Color.Black, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.grisunicauca),
                                     fontSize = 10.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -533,14 +531,14 @@ fun PasoBodyBisection() {
                                 CurvedBorderText(
                                     text = "${
                                         evaluarFuncion(
-                                            resultado.c.toDouble(),
+                                            resultado.c,
                                             funcion.value
                                         )
                                     }",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.grisunicauca),
                                     fontSize = 10.sp,
-                                    paddingStart = 20.dp,
+                                    paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
                                     paddingBottom = 6.dp,
@@ -553,29 +551,84 @@ fun PasoBodyBisection() {
                             }
                         }
                     }
-                    val absx1x2 = abs(resultado.a - resultado.c)
+                    val errorf = (resultado.b - resultado.a)/2
+                    Spacer(modifier = Modifier.height(16.dp))
+                    if (evaluarFuncion(resultado.a, funcion.value) * evaluarFuncion(
+                            resultado.c,
+                            funcion.value
+                        ) < 0
+                    ) {
+                        Text(
+                            text = "Observé que f(m${resultado.iteracion}) < f(b) y el signo de f(a) con el signo de f(m${resultado.iteracion}) son opuestos, por lo que el nuevo intervalo se define como [a,m]. De este modo, el valor de 'b' toma el valor de m${resultado.iteracion}.",
+                            color = colorScheme.onBackground,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Justify
+                        )
+                    } else {
+                        Text(
+                            text = "Observé que f(a) < f(m${resultado.iteracion}) y el signo de f(m${resultado.iteracion}) con el signo f(b) son opuestos, por lo que el nuevo intervalo se define como [m,b]. De este modo, el valor de 'a' toma el valor de m${resultado.iteracion}.",
+                            color = colorScheme.onBackground,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Justify
+                        )
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Note que: ",
-                        color = colorScheme.onBackground,
-                        textAlign = TextAlign.Justify
-                    )
-                    Text(
-                        text = " |x1 - x${resultado.iteracion + 1}| = |${resultado.b} - ${resultado.a} | =  $absx1x2 > ${error.value.toDouble()}",
+                        text = "Ademas:",
                         color = colorScheme.onBackground,
                         modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Justify
                     )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState()),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box {
+                            Text(
+                                text = "       b - a \n" +
+                                        "error =    ----------   =  \n  " +
+                                        "     2", modifier = Modifier.fillMaxWidth(),
+                                color = colorScheme.onBackground,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Box {
+                            Text(
+                                text = "${b.value} - ${a.value} \n" +
+                                        "      ----------     =   \n  " +
+                                        "2", modifier = Modifier.fillMaxWidth(),
+                                color = colorScheme.onBackground,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Box {
+                            Text(
+                                text = "  \n" +
+                                        " $errorf \n  " +
+                                        " ", modifier = Modifier.fillMaxWidth(),
+                                color = colorScheme.onBackground,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     // Aquí es donde hacemos el cambio
-                    if (absx1x2 < error.value.toDouble()) {
+                    if (errorf < error.value.toDouble()) {
                         Text(
-                            text = "La diferencia es menor a error y no se procede a calcular x${resultado.iteracion + 2}.",
+                            text = "aquí $errorf < ${error.value.toDouble()}, por lo que el error es menor al permitido. De manera que, se da por terminado el proceso.",
                             color = colorScheme.onBackground,
                             textAlign = TextAlign.Justify
                         )
                     } else {
                         Text(
-                            text = "De manera que, se procede a calcular x${resultado.iteracion + 2}.",
+                            text = "tal que $errorf > ${error.value.toDouble()}, por lo que se procede a calcular m${resultado.iteracion + 1}.",
                             color = colorScheme.onBackground,
                             textAlign = TextAlign.Justify
                         )
@@ -590,77 +643,110 @@ fun PasoBodyBisection() {
                     .padding(10.dp)
             ) {
                 Text(
-                    text = "${currentIndex + 3}. Dado:\n" +
-                            "\na = ${a.value}\n" +
-                            "b = ${b.value}\n" +
-                            "\nse calcula el punto de corte x${currentIndex + 2} con la siguiente ecuación:",
+                    text = "${currentIndex + 3}. Dado el intervalo [a,b] = [${a.value},${b.value}]:\n" +
+                            "\nse calcula el punto de corte m${currentIndex + 1} con la siguiente ecuación:",
                     color = colorScheme.onBackground,
                     textAlign = TextAlign.Justify
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "   a + b \n" +
-                        "  x${currentIndex + 2} =    -----------------     \n  " +
-                        "   2", modifier = Modifier.fillMaxWidth(),
-                color = colorScheme.onBackground,
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Row {
-                Box(
-                    modifier = Modifier
-                        .padding(16.dp)
-                ) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box {
                     Text(
-                        text = "Para ello, oprima el botón",
+                        text = "       a + b \n" +
+                                "m${currentIndex + 1} =    ----------   =  \n  " +
+                                "     2", modifier = Modifier.fillMaxWidth(),
                         color = colorScheme.onBackground,
-                        textAlign = TextAlign.Justify
+                        textAlign = TextAlign.Center
                     )
                 }
                 Box {
-                    Button(
-                        onClick = {
-                            if (a.value.isEmpty() || b.value.isEmpty() || funcion.value.isEmpty() || error.value.isEmpty()) {
-                                Toast.makeText(context, "No deje datos vacíos", Toast.LENGTH_SHORT).show()
-                            } else {
-                                bandera.value = a.value
-                                Toast.makeText(context, "Calculando x${currentIndex + 2}", Toast.LENGTH_SHORT).show()
-
-                                val aDouble = a.value.toDouble()
-                                val bDouble = b.value.toDouble()
-                                val result = calcularX2Bisection(a = aDouble, b = bDouble, funcion = funcion.value)
-                                val absx1x2 = abs(bDouble - result)
-
-                                results.add(
-                                    ResultadoBisection(
-                                        currentIndex + 1,
-                                        aDouble,
-                                        bDouble,
-                                        result
-                                    )
-                                )
-                                currentIndex++
-                                // Update a and b for the next iteration
-                                if (evaluarFuncion(aDouble, funcion.value) * evaluarFuncion(result, funcion.value) < 0) {
-                                    b.value = result.toString()
-                                } else {
-                                    a.value = result.toString()
-                                }
-                                // Check if we should continue
-                                shouldContinue = currentIndex < totalIterations && absx1x2 > error.value.toDouble()
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
-                        enabled = shouldContinue
-                    ) {
-                        val aux = currentIndex + 2
-                        Text(text = "Hallar x$aux")
-                    }
+                    Text(
+                        text = "${a.value} + ${b.value} \n" +
+                                "      ----------     =   \n  " +
+                                "2", modifier = Modifier.fillMaxWidth(),
+                        color = colorScheme.onBackground,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Box {
+                    Text(
+                        text = "  \n" +
+                                " Aquí el valor \n  " +
+                                " ", modifier = Modifier.fillMaxWidth(),
+                        color = colorScheme.onBackground,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
-        }
-        else {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Button(
+                    onClick = {
+                        if (a.value.isEmpty() || b.value.isEmpty() || funcion.value.isEmpty() || error.value.isEmpty()) {
+                            Toast.makeText(context, "No deje datos vacíos", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            bandera.value = a.value
+                            Toast.makeText(
+                                context,
+                                "Calculando x${currentIndex + 2}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            val aDouble = a.value.toDouble()
+                            val bDouble = b.value.toDouble()
+                            val result = calcularX2Bisection(
+                                a = aDouble,
+                                b = bDouble,
+                                funcion = funcion.value
+                            )
+                            val absx1x2 = abs(bDouble - result)
+
+                            results.add(
+                                ResultadoBisection(
+                                    currentIndex + 1,
+                                    aDouble,
+                                    bDouble,
+                                    result
+                                )
+                            )
+                            currentIndex++
+                            // Update a and b for the next iteration
+                            if (evaluarFuncion(aDouble, funcion.value) * evaluarFuncion(
+                                    result,
+                                    funcion.value
+                                ) < 0
+                            ) {
+                                b.value = result.toString()
+                            } else {
+                                a.value = result.toString()
+                            }
+                            // Check if we should continue
+                            shouldContinue =
+                                currentIndex < totalIterations && absx1x2 > error.value.toDouble()
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
+                    enabled = shouldContinue
+                ) {
+                    val aux = currentIndex + 2
+                    Text(text = "Iteración ${aux - 1}")
+                }
+            }
+
+        } else {
             Column {
 
                 Text(
@@ -678,35 +764,36 @@ fun PasoBodyBisection() {
             }
         }
         if (!shouldContinue) {
-        Text(
-            text = "El proceso ha terminado.",
-            color = colorScheme.onBackground,
-            modifier = Modifier.padding(16.dp),
-            fontWeight = FontWeight.Bold
-        )
-        Button(
-            onClick = {
-                // Reiniciar todas las variables
-                funcion.value = ""
-                a.value = ""
-                b.value = ""
-                error.value = ""
-                bandera.value = ""
-                currentIndex = 0
-                results.clear()
-                shouldContinue = true
-            },
-            colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text("Realizar nuevo cálculo")
+            Text(
+                text = "El proceso ha terminado.",
+                color = colorScheme.onBackground,
+                modifier = Modifier.padding(16.dp),
+                fontWeight = FontWeight.Bold
+            )
+            Button(
+                onClick = {
+                    // Reiniciar todas las variables
+                    funcion.value = ""
+                    a.value = ""
+                    b.value = ""
+                    error.value = ""
+                    bandera.value = ""
+                    currentIndex = 0
+                    results.clear()
+                    shouldContinue = true
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text("Realizar nuevo cálculo")
+            }
         }
-    }
 
     }
 }
+
 @SuppressLint("DefaultLocale")
 fun calcularX2Bisection(a: Double, b: Double, funcion: String): Double {
     val x2 = (a + b) / 2

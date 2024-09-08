@@ -20,8 +20,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -52,12 +50,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.nav_menu_newton.ResultadoNewton
-import com.example.mathsus.ui.methods.Derivada
 import com.example.mathsus.ui.methods.secanteMethod.CurvedBorderText
-import com.example.mathsus.ui.methods.secanteMethod.evaluarFuncion
 import org.mariuszgromada.math.mxparser.Argument
 import org.mariuszgromada.math.mxparser.Expression
-import org.mariuszgromada.math.mxparser.Function
 import kotlin.math.abs
 
 
@@ -399,9 +394,10 @@ fun ResultCell(text: String) {
     )
 }
 
-fun NewtonRaphsonCalculator(x: Double, function: String): Triple<Double, Double, Double> {
+@SuppressLint("DefaultLocale")
+fun newtonRaphsonCalculator(x: Double, function: String): Triple<Double, Double, Double> {
     val fx = evaluarFuncion1(x, function)
-    val dfx = CalculateDerivative(function, x)
+    val dfx = calculateDerivative(function, x)
 
     if (dfx == 0.0) {
         throw IllegalArgumentException("La derivada es cero. No se puede continuar.")
@@ -422,7 +418,7 @@ fun evaluarFuncion1(x: Double, function: String): Double {
     return expression.calculate()
 }
 
-fun CalculateDerivative(function: String, x: Double): Double {
+fun calculateDerivative(function: String, x: Double): Double {
     val xArgument = Argument("x = $x")
     val derivativeExpression = "der($function, x)"
     val expression = Expression(derivativeExpression, xArgument)
@@ -450,7 +446,7 @@ fun CalculateButton(
                 Toast.makeText(context, "Calculando x${currentIndex + 1}", Toast.LENGTH_SHORT).show()
 
                 val x = if (currentIndex == 0) x0.toDouble() else results.last().nextX
-                val (nextX, fx, dfx) = NewtonRaphsonCalculator(x, function)
+                val (nextX, fx, dfx) = newtonRaphsonCalculator(x, function)
                 results.add(ResultadoNewton(currentIndex, x, fx, dfx, nextX))
                 onCurrentIndexChange(currentIndex + 1)
 
