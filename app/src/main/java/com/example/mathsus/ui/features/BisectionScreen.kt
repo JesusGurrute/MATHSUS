@@ -34,9 +34,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.mathsus.R
+import com.example.mathsus.ui.features.nav_menu_bisection.DestinosBisection
+import com.example.mathsus.ui.features.nav_menu_bisection.DrawerBisection
 import com.example.mathsus.ui.features.nav_menu_secante.Drawer
 import com.example.mathsus.ui.features.nav_menu_secante.TopBar
-import com.example.mathsus.ui.methods.Destinos
+import com.example.mathsus.ui.features.nav_menu_secante.DestinosSecante
 import com.example.mathsus.ui.methods.bisectionMethod.BodyBisection
 
 @Composable
@@ -45,16 +47,16 @@ fun BisectionScreen(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
-        Destinos.Pantalla1,
-        Destinos.Pantalla2,
-        Destinos.Pantalla3,
-        Destinos.Pantalla4
+        DestinosBisection.Home,
+        DestinosBisection.StepBisectionScreen,
+        DestinosBisection.InfoBisectionScreen,
+        DestinosBisection.ExcersiceBisectionScreen
     )
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Drawer(menuItems = navigationItems, navController = navController)
+                DrawerBisection(menuItems = navigationItems, navController = navController)
             }
         }
     ) {

@@ -28,17 +28,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarSecante
-import com.example.mathsus.ui.methods.Destinos
 
 @Composable
 fun ExerciseSecante(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
-        Destinos.Pantalla1,
-        Destinos.Pantalla2,
-        Destinos.Pantalla3,
-        Destinos.Pantalla4
+        DestinosExcerSecante.Pantalla1,
+        DestinosExcerSecante.Pantalla2,
+        DestinosExcerSecante.Pantalla3,
+        DestinosExcerSecante.Pantalla4
     )
     ModalNavigationDrawer(
         drawerState = drawerState,

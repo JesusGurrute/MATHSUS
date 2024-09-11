@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarSecante
-import com.example.mathsus.ui.methods.Destinos
 import com.example.mathsus.ui.methods.secanteMethod.PasoBodySecante
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -54,10 +53,10 @@ fun PasoSecante(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
-        Destinos.Pantalla1,
-        Destinos.Pantalla2,
-        Destinos.Pantalla3,
-        Destinos.Pantalla4
+        DestinosPasoSecante.Pantalla1,
+        DestinosPasoSecante.Pantalla2,
+        DestinosPasoSecante.Pantalla3,
+        DestinosPasoSecante.Pantalla4
     )
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -81,12 +80,11 @@ fun PasoSecante(navController: NavHostController) {
             },
             bottomBar = { BottomNavBarSecante(navController = navController) }
         )
-
     }
 }
 
 @Composable
-fun Drawer(menuItems: List<Destinos>, navController: NavHostController) {
+fun Drawer(menuItems: List<DestinosSecante>, navController: NavHostController) {
     Column {
         Image(
             painterResource(id = R.drawable.menu_lateral),
@@ -108,7 +106,7 @@ fun Drawer(menuItems: List<Destinos>, navController: NavHostController) {
 }
 
 @Composable
-fun DrawerItem(item: Destinos, navController: NavHostController) {
+fun DrawerItem(item: DestinosSecante, navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

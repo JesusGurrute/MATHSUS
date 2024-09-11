@@ -43,7 +43,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.nav_menu_secante.Drawer
 import com.example.mathsus.ui.features.nav_menu_secante.TopBar
-import com.example.mathsus.ui.methods.Destinos
+import com.example.mathsus.ui.features.nav_menu_secante.DestinosSecante
 import com.example.mathsus.ui.methods.secanteMethod.BodySecante
 
 @Composable
@@ -52,10 +52,10 @@ fun SecanteScreen(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
-        Destinos.Pantalla1,
-        Destinos.Pantalla2,
-        Destinos.Pantalla3,
-        Destinos.Pantalla4
+        DestinosSecante.Pantalla1,
+        DestinosSecante.Pantalla2,
+        DestinosSecante.Pantalla3,
+        DestinosSecante.Pantalla4
     )
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -173,48 +173,6 @@ fun BottomNavBarSecante(navController: NavController) {
             label = { Text("Práctica", color = Color.White) },
             selected = false,
             onClick = { navController.navigate("exerciseSecante") }
-        )
-    }
-}
-
-@Composable
-fun ExplicacionSecante() {
-    val colorScheme = MaterialTheme.colorScheme
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .statusBarsPadding()
-            .padding(10.dp)
-            .background(
-                shape = RoundedCornerShape(16.dp),
-                color = colorScheme.background
-            )
-            .navigationBarsPadding()
-            .padding(10.dp)
-    ) {
-        Text(
-            text = "Graficamente",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = colorResource(id = R.color.rojounicauca),
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Desde el punto de vista geométrico, el método se basa en aproximar la función:",
-            textAlign = TextAlign.Justify
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "y = f(x)",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "por una recta secante a la gráfica de f, y usar la raíz de la recta como aproximación a la solución del problema f(x) = 0.",
-            textAlign = TextAlign.Justify
         )
     }
 }

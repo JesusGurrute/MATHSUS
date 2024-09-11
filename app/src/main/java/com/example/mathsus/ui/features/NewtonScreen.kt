@@ -33,9 +33,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.mathsus.R
-import com.example.mathsus.ui.features.nav_menu_secante.Drawer
+import com.example.mathsus.ui.features.nav_menu_newton.DestinosNewton
+import com.example.mathsus.ui.features.nav_menu_newton.DrawerNewton
 import com.example.mathsus.ui.features.nav_menu_secante.TopBar
-import com.example.mathsus.ui.methods.Destinos
 import com.example.mathsus.ui.methods.newtonMethod.BodyNewtonRaphson
 
 @Composable
@@ -44,16 +44,16 @@ fun NewtonScreen(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
-        Destinos.Pantalla1,
-        Destinos.Pantalla2,
-        Destinos.Pantalla3,
-        Destinos.Pantalla4
+        DestinosNewton.Home,
+        DestinosNewton.StepNewtonScreen,
+        DestinosNewton.InfoNewtonScreen,
+        DestinosNewton.ExcersiceNewtonScreen
     )
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Drawer(menuItems = navigationItems, navController = navController)
+                DrawerNewton(menuItems = navigationItems, navController = navController)
             }
         }
     ) {

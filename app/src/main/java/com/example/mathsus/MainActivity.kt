@@ -32,72 +32,38 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MATHSUSTheme {
-
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-
                     NavHost(
                         navController = navController,
                         startDestination = "splash"
                     ) {
-
                         composable(route = "splash") { SplashScreen(navController = navController) }
+
                         composable(route = "bisection") { BisectionScreen(navController = navController) }
+                        composable(route = "pasoBisection") { PasoBisection(navController = navController) }
+                        composable(route = "infoBisection") { InformationBisection(navController = navController) }
+                        composable(route = "exerciseBisection") { ExerciseBisection(navController = navController) }
+
                         composable(route = "newton") { NewtonScreen(navController = navController) }
+                        composable(route = "pasoNewton") { PasoNewton(navController = navController) }
+                        composable(route = "infoNewton") { InformationNewton(navController = navController) }
+                        composable(route = "exerciseNewton") { ExerciseNewton(navController = navController) }
 
-                        composable(route = "secante") {
-                            SecanteScreen(navController = navController)
-                        }
+                        composable(route = "secante") {SecanteScreen(navController = navController) }
+                        composable(route = "pasoSecante") { PasoSecante(navController = navController) }
+                        composable(route = "infoSecante") { InformationSecante(navController = navController) }
+                        composable(route = "exerciseSecante") { ExerciseSecante(navController = navController) }
 
-                        composable(route = "info") {
-                            Info(navController = navController)
-                        }
-
-                        composable(route = "infoNewton") {
-                            InformationNewton(navController = navController)
-                        }
-
-                        composable(route = "exerciseNewton") {
-                            ExerciseNewton(navController = navController)
-                        }
-
-                        composable(route = "infoSecante") {
-                            InformationSecante(navController = navController)
-                        }
-
-                        composable(route = "exerciseSecante") {
-                            ExerciseSecante(navController = navController)
-                        }
-
-                        composable(route = "infoBisection") {
-                            InformationBisection(navController = navController)
-                        }
-
-                        composable(route = "exerciseBisection") {
-                            ExerciseBisection(navController = navController)
-                        }
-
-                        composable(route = "pasoSecante") {
-                            PasoSecante(navController = navController)
-                        }
-                        composable(route = "pasoBisection") {
-                            PasoBisection(navController = navController)
-                        }
-                        composable(route = "pasoNewton") {
-                            PasoNewton(navController = navController)
-                        }
+                        composable(route = "info") { Info(navController = navController) }
                     }
-
                 }
-
-
             }
         }
     }

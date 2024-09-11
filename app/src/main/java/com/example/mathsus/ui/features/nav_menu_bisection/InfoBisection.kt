@@ -28,23 +28,23 @@ import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarBisection
 import com.example.mathsus.ui.features.nav_menu_secante.Drawer
 import com.example.mathsus.ui.features.nav_menu_secante.TopBar
-import com.example.mathsus.ui.methods.Destinos
+import com.example.mathsus.ui.features.nav_menu_secante.DestinosSecante
 
 @Composable
 fun InformationBisection(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
-        Destinos.Pantalla1,
-        Destinos.Pantalla2,
-        Destinos.Pantalla3,
-        Destinos.Pantalla4
+        DestinosBisection.Home,
+        DestinosBisection.CalculateBisectionScreen,
+        DestinosBisection.StepBisectionScreen,
+        DestinosBisection.ExcersiceBisectionScreen
     )
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Drawer(menuItems = navigationItems, navController = navController)
+                DrawerBisection(menuItems = navigationItems, navController = navController)
             }
         }
     ) {

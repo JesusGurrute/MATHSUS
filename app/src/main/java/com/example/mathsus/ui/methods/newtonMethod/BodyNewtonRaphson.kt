@@ -3,6 +3,7 @@ package com.example.mathsus.ui.methods.newtonMethod
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,6 +54,7 @@ import com.example.mathsus.ui.features.nav_menu_newton.ResultadoNewton
 import com.example.mathsus.ui.methods.secanteMethod.CurvedBorderText
 import org.mariuszgromada.math.mxparser.Argument
 import org.mariuszgromada.math.mxparser.Expression
+import java.util.Locale
 import kotlin.math.abs
 
 
@@ -225,6 +227,12 @@ fun PasoBodyNewton() {
                     color = colorScheme.onBackground,
                     textAlign = TextAlign.Center
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Este método es conciderado abierto, donde no requiere un intervalo, sino que un valor inicial. Además, se tendra implícita la derivada f'(x).",
+                    color = colorScheme.onBackground,
+                    textAlign = TextAlign.Justify
+                )
             }
         }
         OutlinedTextField(
@@ -246,7 +254,7 @@ fun PasoBodyNewton() {
                 .padding(16.dp)
         ) {
             Text(
-                text = "2. Ingrese el valor inicial x0 y el error deseado",
+                text = "2. Ingrese el valor inicial x0 y el error deseado para terminar el cálculo.",
                 color = colorScheme.onBackground,
                 textAlign = TextAlign.Justify
             )
@@ -275,7 +283,9 @@ fun PasoBodyNewton() {
                 modifier = Modifier.size(width = 130.dp, height = 60.dp)
             )
         }
-
+        if (function.isNotEmpty()) {
+            MostrarFuncionYDerivada(function, results)
+        }
         results.forEach { resultado ->
             Box(
                 modifier = Modifier
@@ -289,12 +299,19 @@ fun PasoBodyNewton() {
                         textAlign = TextAlign.Justify,
                         fontWeight = FontWeight.Bold
                     )
+
+
                     Box(
                         modifier = Modifier
                             .horizontalScroll(rememberScrollState())
-                            .width(400.dp)
+                            .width(300.dp)
                     ) {
-                        Column {
+                        Column(modifier = Modifier
+                            .wrapContentWidth()
+                            .fillMaxWidth()
+                            .width(IntrinsicSize.Min)
+                            .horizontalScroll(rememberScrollState())
+                            .background(MaterialTheme.colorScheme.background)) {
                             Row(
                                 modifier = Modifier
                                     .wrapContentWidth()
@@ -303,20 +320,18 @@ fun PasoBodyNewton() {
                                     .horizontalScroll(rememberScrollState())
                                     .background(MaterialTheme.colorScheme.background)
                             ) {
-                                ResultHeaderCell(text = "x${resultado.iteracion}")
+                                ResultHeaderCell(text = "x${resultado.iteracion} ")
                                 ResultHeaderCell(text = "f(x${resultado.iteracion})")
                                 ResultHeaderCell(text = "f'(x${resultado.iteracion})")
                                 ResultHeaderCell(text = "x${resultado.iteracion + 1}")
                             }
                             Row(
                                 modifier = Modifier
+                                    .wrapContentWidth()
                                     .fillMaxWidth()
                                     .width(IntrinsicSize.Min)
                                     .horizontalScroll(rememberScrollState())
-                                    .background(
-                                        shape = RoundedCornerShape(4.dp),
-                                        color = colorResource(id = R.color.grisunicauca)
-                                    )
+                                    .background(MaterialTheme.colorScheme.background)
                             ) {
                                 ResultCell(text = "${resultado.x}")
                                 ResultCell(text = "${resultado.fx}")
@@ -365,7 +380,7 @@ fun ResultHeaderCell(text: String) {
         textColor = Color.White,
         backgroundColor = colorResource(id = R.color.azulunicauca),
         fontSize = 14.sp,
-        paddingStart = 20.dp,
+        paddingStart = 12.dp,
         paddingEnd = 12.dp,
         paddingTop = 6.dp,
         paddingBottom = 6.dp,
@@ -382,8 +397,8 @@ fun ResultCell(text: String) {
         text = text,
         textColor = Color.Black,
         backgroundColor = colorResource(id = R.color.grisunicauca),
-        fontSize = 10.sp,
-        paddingStart = 20.dp,
+        fontSize = 14.sp,
+        paddingStart = 12.dp,
         paddingEnd = 12.dp,
         paddingTop = 6.dp,
         paddingBottom = 6.dp,
@@ -395,7 +410,7 @@ fun ResultCell(text: String) {
 }
 
 @SuppressLint("DefaultLocale")
-fun newtonRaphsonCalculator(x: Double, function: String): Triple<Double, Double, Double> {
+fun newtonRaphsonCalculator(iteracion: Int, x: Double, function: String, symbolicDerivative: String): ResultadoNewton {
     val fx = evaluarFuncion1(x, function)
     val dfx = calculateDerivative(function, x)
 
@@ -405,11 +420,32 @@ fun newtonRaphsonCalculator(x: Double, function: String): Triple<Double, Double,
 
     val nextX = x - fx / dfx
 
-    return Triple(
-        String.format("%.4f", nextX).toDouble(),
-        String.format("%.4f", fx).toDouble(),
-        String.format("%.4f", dfx).toDouble()
+    return ResultadoNewton(
+        iteracion = iteracion,
+        x = x,
+        fx = String.format("%.4f", fx).toDouble(),
+        dfx = String.format("%.4f", dfx).toDouble(),
+        nextX = String.format("%.4f", nextX).toDouble(),
+        symbolicDerivative = symbolicDerivative
     )
+}
+fun calculateSymbolicDerivative(function: String): String {
+    // Remove whitespace and convert to lowercase for easier parsing
+    val cleanFunction = function.replace("\\s".toRegex(), "").lowercase(Locale.getDefault())
+
+    return when {
+        cleanFunction == "sin(x)" -> "cos(x)"
+        cleanFunction == "cos(x)" -> "-sin(x)"
+        cleanFunction == "tan(x)" -> "sec^2(x)"
+        cleanFunction == "exp(x)" || cleanFunction == "e^x" -> "exp(x)" // or "e^x"
+        cleanFunction == "ln(x)" -> "1/x"
+        cleanFunction.matches(Regex("x\\^(\\d+)")) -> {
+            val power = cleanFunction.substringAfter("^").toInt()
+            "${power}x^${power - 1}"
+        }
+        // Add more cases as needed
+        else -> "Derivative of $function" // Fallback for unsupported functions
+    }
 }
 // Esta función no es @Composable
 fun evaluarFuncion1(x: Double, function: String): Double {
@@ -445,13 +481,14 @@ fun CalculateButton(
             } else {
                 Toast.makeText(context, "Calculando x${currentIndex + 1}", Toast.LENGTH_SHORT).show()
 
+                val symbolicDerivative = calculateSymbolicDerivative(function)
                 val x = if (currentIndex == 0) x0.toDouble() else results.last().nextX
-                val (nextX, fx, dfx) = newtonRaphsonCalculator(x, function)
-                results.add(ResultadoNewton(currentIndex, x, fx, dfx, nextX))
+                val result = newtonRaphsonCalculator(currentIndex, x, function, symbolicDerivative)
+                results.add(result)
                 onCurrentIndexChange(currentIndex + 1)
 
                 // Check if we should continue
-                onShouldContinueChange(currentIndex + 1 < 200 && abs(nextX - x) > error.toDouble())
+                onShouldContinueChange(currentIndex + 1 < 200 && abs(result.nextX - x) > error.toDouble())
             }
         },
         colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
@@ -540,3 +577,46 @@ fun RestartButton(
         Text("Realizar nuevo cálculo")
     }
 }
+
+@Composable
+fun MostrarFuncionYDerivada(function: String, results: List<ResultadoNewton>) {
+    val colorScheme = MaterialTheme.colorScheme
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .border(1.dp, colorScheme.primary, shape = RoundedCornerShape(8.dp))
+            .padding(16.dp)
+    ) {
+        FuncionText("f(x)", function)
+        Spacer(modifier = Modifier.height(8.dp))
+        if (results.isNotEmpty()) {
+            FuncionText("f'(x)", results[0].symbolicDerivative)
+        } else {
+            FuncionText("f'(x)", "Pendiente de cálculo")
+        }
+    }
+}
+
+@Composable
+fun FuncionText(label: String, content: String) {
+    val colorScheme = MaterialTheme.colorScheme
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = "$label =",
+            fontWeight = FontWeight.Bold,
+            color = colorScheme.primary,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = content,
+            fontWeight = FontWeight.Medium,
+            color = colorScheme.onBackground,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+

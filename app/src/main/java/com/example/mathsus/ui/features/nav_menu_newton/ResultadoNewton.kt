@@ -5,7 +5,8 @@ data class ResultadoNewton(
     val x: Double,
     val fx: Double,
     val dfx: Double,
-    val nextX: Double
+    val nextX: Double,
+    val symbolicDerivative: String
 )
 
 

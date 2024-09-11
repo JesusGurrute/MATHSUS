@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,23 +26,23 @@ import com.example.mathsus.R
 import com.example.mathsus.ui.features.BottomNavBarNewton
 import com.example.mathsus.ui.features.nav_menu_secante.Drawer
 import com.example.mathsus.ui.features.nav_menu_secante.TopBar
-import com.example.mathsus.ui.methods.Destinos
+import com.example.mathsus.ui.features.nav_menu_secante.DestinosSecante
 
 @Composable
 fun ExerciseNewton(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
-        Destinos.Pantalla1,
-        Destinos.Pantalla2,
-        Destinos.Pantalla3,
-        Destinos.Pantalla4
+        DestinosNewton.Home,
+        DestinosNewton.CalculateNewtonScreen,
+        DestinosNewton.StepNewtonScreen,
+        DestinosNewton.InfoNewtonScreen
     )
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Drawer(menuItems = navigationItems, navController = navController)
+                DrawerNewton(menuItems = navigationItems, navController = navController)
             }
         }
     ) {
