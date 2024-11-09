@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries
@@ -33,6 +36,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.mathsus.R
+//import com.example.mathsus.R
 import com.example.mathsus.ui.features.nav_menu_newton.DestinosNewton
 import com.example.mathsus.ui.features.nav_menu_newton.DrawerNewton
 import com.example.mathsus.ui.features.nav_menu_secante.TopBar
@@ -71,11 +75,12 @@ fun NewtonScreen(navController: NavHostController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(padding)
+                            .verticalScroll(rememberScrollState()) // Agrega el scroll vertical aquí
                     ) {
                         Box(
                             modifier = Modifier
-                                .weight(1f)
                                 .fillMaxWidth()
+                                .heightIn(min = 200.dp, max = 500.dp)
                         ) {
                             BodyNewtonRaphson()
                         }

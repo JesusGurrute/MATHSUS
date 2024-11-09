@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -67,132 +66,149 @@ fun BodyBisection() {
     val context = LocalContext.current
     val zoom = remember { mutableFloatStateOf(1f) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .statusBarsPadding()
-                .padding(10.dp)
-                .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
-                .navigationBarsPadding()
-                .padding(10.dp)
-        ) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(10.dp)
+            .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
+            .navigationBarsPadding()
+            .padding(10.dp)
+    ) {
+        OutlinedTextField(
+            label = { Text(text = "Ingrese la funcion") },
+            value = funcion.value,
+            onValueChange = {
+                if (funcion.value.length <= 30)
+                    funcion.value = it
+            },
+            shape = RoundedCornerShape(size = 8.dp),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Row {
             OutlinedTextField(
-                label = { Text(text = "Ingrese la funcion") },
-                value = funcion.value,
-                onValueChange = {
-                    if (funcion.value.length <= 30)
-                        funcion.value = it
+                label = { Text(text = "a") },
+                value = a.value,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    keyboardType = KeyboardType.Number
+                ),
+                onValueChange = { newValue ->
+                    // Primero reemplazamos las comas por puntos
+                    val processedValue = newValue.replace(',', '.')
+                    // Luego verificamos si el valor resultante es un número decimal válido
+                    if (processedValue.isEmpty() || processedValue.matches(Regex("^\\d*\\.?\\d*$"))) {
+                        a.value = processedValue
+                    }
                 },
                 shape = RoundedCornerShape(size = 8.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.size(width = 100.dp, height = 60.dp)
             )
-            Row {
-                OutlinedTextField(
-                    label = { Text(text = "a") },
-                    value = a.value,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Sentences,
-                        keyboardType = KeyboardType.Number
-                    ),
-                    onValueChange = {
-                        a.value = it
-                    },
-                    shape = RoundedCornerShape(size = 8.dp),
-                    modifier = Modifier.size(width = 100.dp, height = 60.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                OutlinedTextField(
-                    label = { Text(text = "b") },
-                    value = b.value,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Sentences,
-                        keyboardType = KeyboardType.Number
-                    ),
-                    onValueChange = {
-                        b.value = it
-                    },
-                    shape = RoundedCornerShape(size = 8.dp),
-                    modifier = Modifier.size(width = 100.dp, height = 60.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                OutlinedTextField(
-                    label = { Text(text = "Error") },
-                    value = error.value,
-                    keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Sentences,
-                        keyboardType = KeyboardType.Number
-                    ),
-                    onValueChange = {
-                        error.value = it
-                    },
-                    shape = RoundedCornerShape(size = 8.dp),
-                    modifier = Modifier.size(width = 160.dp, height = 60.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-            }
             Spacer(modifier = Modifier.width(8.dp))
-            Row(
+            OutlinedTextField(
+                label = { Text(text = "b") },
+                value = b.value,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    keyboardType = KeyboardType.Number
+                ),
+                onValueChange = { newValue ->
+                    // Primero reemplazamos las comas por puntos
+                    val processedValue = newValue.replace(',', '.')
+                    // Luego verificamos si el valor resultante es un número decimal válido
+                    if (processedValue.isEmpty() || processedValue.matches(Regex("^\\d*\\.?\\d*$"))) {
+                        b.value = processedValue
+                    }
+                },
+                shape = RoundedCornerShape(size = 8.dp),
+                modifier = Modifier.size(width = 100.dp, height = 60.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            OutlinedTextField(
+                label = { Text(text = "tol") },
+                value = error.value,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    keyboardType = KeyboardType.Number
+                ),
+                onValueChange = { newValue ->
+                    // Primero reemplazamos las comas por puntos
+                    val processedValue = newValue.replace(',', '.')
+                    // Luego verificamos si el valor resultante es un número decimal válido
+                    if (processedValue.isEmpty() || processedValue.matches(Regex("^\\d*\\.?\\d*$"))) {
+                        error.value = processedValue
+                    }
+                },
+                shape = RoundedCornerShape(size = 8.dp),
+                modifier = Modifier.size(width = 160.dp, height = 60.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+        ) {
+            Button(
+                onClick = {
+                    if (a.value.isEmpty() || b.value.isEmpty() || error.value.isEmpty() || funcion.value.isEmpty()) {
+                        Toast.makeText(
+                            context,
+                            "No deje datos vacios",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    } else {
+                        bandera1.value = a.value
+                        Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            ) {
+                Text(text = "Calcular")
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // Nuevo botón para limpiar los campos
+            Button(
+                onClick = {
+                    funcion.value = ""
+                    a.value = ""
+                    b.value = ""
+                    error.value = ""
+                    bandera1.value = ""
+                    Toast.makeText(context, "Campos limpios", Toast.LENGTH_SHORT).show()
+                }
+            ) {
+                Text(text = "Limpiar")
+            }
+        }
+        if (bandera1.value.isEmpty()) {
+            /*
+            Text(
+                text = "Al llenar todas las casillas, oprima el boton 'calcular'",
+                color = Color.Black,
+                modifier = Modifier.padding(16.dp)
+            )
+             */
+
+        } else {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp),
             ) {
-                Button(
-                    onClick = {
-                        if (a.value.isEmpty() || b.value.isEmpty() || error.value.isEmpty() || funcion.value.isEmpty()) {
-                            Toast.makeText(
-                                context,
-                                "No deje datos vacios",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        } else {
-                            bandera1.value = a.value
-                            Toast.makeText(context, "Calculando", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-                ) {
-                    Text(text = "Calcular")
-                }
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                // Nuevo botón para limpiar los campos
-                Button(
-                    onClick = {
-                        funcion.value = ""
-                        a.value = ""
-                        b.value = ""
-                        error.value = ""
-                        bandera1.value = ""
-                        Toast.makeText(context, "Campos limpios", Toast.LENGTH_SHORT).show()
-                    }
-                ) {
-                    Text(text = "Limpiar")
-                }
-            }
-            if (bandera1.value.isEmpty()) {
-                Text(
-                    text = "Al llenar todas las casillas, oprima el boton 'calcular'",
-                    color = Color.Black,
-                    modifier = Modifier.padding(16.dp)
+                Bisection(
+                    f = funcion.value,
+                    a = a.value.toDouble(),
+                    b = b.value.toDouble(),
+                    epsilon = error.value.toDouble(),
                 )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Bisection(
-                        f = funcion.value,
-                        a = a.value.toDouble(),
-                        b = b.value.toDouble(),
-                        epsilon = error.value.toDouble(),
-                    )
-                }
             }
         }
     }
+
 }
 
 @Composable
@@ -204,7 +220,6 @@ fun PasoBodyBisection() {
             .statusBarsPadding()
             .padding(2.dp)
             .background(colorScheme.background)
-            //.background(shape = RoundedCornerShape(16.dp), color = Color.White)
             .navigationBarsPadding()
             .padding(4.dp)
     ) {
@@ -220,9 +235,11 @@ fun PasoBodyBisection() {
         val funcion = remember { mutableStateOf("") }
         val a = remember { mutableStateOf("") }
         val b = remember { mutableStateOf("") }
-        val error = remember { mutableStateOf("") }
+        val tol = remember { mutableStateOf("") }
         val bandera = remember { mutableStateOf("") }
         val context = LocalContext.current
+
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -281,8 +298,13 @@ fun PasoBodyBisection() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-                onValueChange = {
-                    a.value = it
+                onValueChange = { newValue ->
+                    // Primero reemplazamos las comas por puntos
+                    val processedValue = newValue.replace(',', '.')
+                    // Luego verificamos si el valor resultante es un número decimal válido
+                    if (processedValue.isEmpty() || processedValue.matches(Regex("^\\d*\\.?\\d*$"))) {
+                        a.value = processedValue
+                    }
                 },
                 shape = RoundedCornerShape(size = 8.dp),
                 modifier = Modifier.size(width = 80.dp, height = 60.dp)
@@ -295,16 +317,21 @@ fun PasoBodyBisection() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-                onValueChange = {
-                    b.value = it
+                onValueChange = { newValue ->
+                    // Primero reemplazamos las comas por puntos
+                    val processedValue = newValue.replace(',', '.')
+                    // Luego verificamos si el valor resultante es un número decimal válido
+                    if (processedValue.isEmpty() || processedValue.matches(Regex("^\\d*\\.?\\d*$"))) {
+                        b.value = processedValue
+                    }
                 },
                 shape = RoundedCornerShape(size = 8.dp),
                 modifier = Modifier.size(width = 80.dp, height = 60.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             OutlinedTextField(
-                label = { Text(text = "Error") },
-                value = error.value,
+                label = { Text(text = "tol") },
+                value = tol.value,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
@@ -314,7 +341,7 @@ fun PasoBodyBisection() {
                     val processedValue = newValue.replace(',', '.')
                     // Luego verificamos si el valor resultante es un número decimal válido
                     if (processedValue.isEmpty() || processedValue.matches(Regex("^\\d*\\.?\\d*$"))) {
-                        error.value = processedValue
+                        tol.value = processedValue
                     }
                 },
                 shape = RoundedCornerShape(size = 8.dp),
@@ -356,7 +383,7 @@ fun PasoBodyBisection() {
                                     text = "a",
                                     textColor = Color.White,
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -371,7 +398,7 @@ fun PasoBodyBisection() {
                                     text = "b",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -386,7 +413,7 @@ fun PasoBodyBisection() {
                                     text = "m${resultado.iteracion}",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -401,7 +428,7 @@ fun PasoBodyBisection() {
                                     text = "f(a)",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -416,7 +443,7 @@ fun PasoBodyBisection() {
                                     text = "f(b)",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -431,7 +458,7 @@ fun PasoBodyBisection() {
                                     text = "f(m${resultado.iteracion})",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 10.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 12.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -551,7 +578,16 @@ fun PasoBodyBisection() {
                             }
                         }
                     }
-                    val errorf = (resultado.b - resultado.a)/2
+                    val errorf = (resultado.b - resultado.a) / 2
+                    val rounderrorf = String.format("%.4e", errorf)
+                    val partserrorf = rounderrorf.split("e")
+                    val coefficienterrorf = partserrorf[0].toDouble()
+                    val exponenterrorf = partserrorf[1].toInt()
+                    val errorCoefficientf = if (coefficienterrorf % 1 == 0.0) {
+                        coefficienterrorf.toInt().toString()
+                    } else {
+                        partserrorf[0].replace(Regex("0*$"), "")
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
                     if (evaluarFuncion(resultado.a, funcion.value) * evaluarFuncion(
                             resultado.c,
@@ -610,7 +646,7 @@ fun PasoBodyBisection() {
                         Box {
                             Text(
                                 text = "  \n" +
-                                        " $errorf \n  " +
+                                        " $errorCoefficientf * 10^$exponenterrorf \n  " +
                                         " ", modifier = Modifier.fillMaxWidth(),
                                 color = colorScheme.onBackground,
                                 textAlign = TextAlign.Center
@@ -620,15 +656,17 @@ fun PasoBodyBisection() {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     // Aquí es donde hacemos el cambio
-                    if (errorf < error.value.toDouble()) {
+
+                    if (errorf < tol.value.toDouble()) {
+
                         Text(
-                            text = "aquí $errorf < ${error.value.toDouble()}, por lo que el error es menor al permitido. De manera que, se da por terminado el proceso.",
+                            text = "aquí $errorCoefficientf * 10^$exponenterrorf < ${tol.value.toDouble()}, por lo que el error es menor al permitido. De manera que, se da por terminado el proceso.",
                             color = colorScheme.onBackground,
                             textAlign = TextAlign.Justify
                         )
                     } else {
                         Text(
-                            text = "tal que $errorf > ${error.value.toDouble()}, por lo que se procede a calcular m${resultado.iteracion + 1}.",
+                            text = "tal que $errorCoefficientf * 10^$exponenterrorf > ${tol.value.toDouble()}, por lo que se procede a calcular m${resultado.iteracion + 1}.",
                             color = colorScheme.onBackground,
                             textAlign = TextAlign.Justify
                         )
@@ -669,22 +707,14 @@ fun PasoBodyBisection() {
                 Box {
                     Text(
                         text = "${a.value} + ${b.value} \n" +
-                                "      ----------     =   \n  " +
+                                "      ----------       \n  " +
                                 "2", modifier = Modifier.fillMaxWidth(),
                         color = colorScheme.onBackground,
                         textAlign = TextAlign.Center
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Box {
-                    Text(
-                        text = "  \n" +
-                                " Aquí el valor \n  " +
-                                " ", modifier = Modifier.fillMaxWidth(),
-                        color = colorScheme.onBackground,
-                        textAlign = TextAlign.Center
-                    )
-                }
+
             }
             Box(
                 modifier = Modifier
@@ -694,7 +724,7 @@ fun PasoBodyBisection() {
             ) {
                 Button(
                     onClick = {
-                        if (a.value.isEmpty() || b.value.isEmpty() || funcion.value.isEmpty() || error.value.isEmpty()) {
+                        if (a.value.isEmpty() || b.value.isEmpty() || funcion.value.isEmpty() || tol.value.isEmpty()) {
                             Toast.makeText(context, "No deje datos vacíos", Toast.LENGTH_SHORT)
                                 .show()
                         } else {
@@ -735,7 +765,7 @@ fun PasoBodyBisection() {
                             }
                             // Check if we should continue
                             shouldContinue =
-                                currentIndex < totalIterations && absx1x2 > error.value.toDouble()
+                                currentIndex < totalIterations && absx1x2 > tol.value.toDouble()
                         }
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = colorScheme.primary),
@@ -776,7 +806,7 @@ fun PasoBodyBisection() {
                     funcion.value = ""
                     a.value = ""
                     b.value = ""
-                    error.value = ""
+                    tol.value = ""
                     bandera.value = ""
                     currentIndex = 0
                     results.clear()

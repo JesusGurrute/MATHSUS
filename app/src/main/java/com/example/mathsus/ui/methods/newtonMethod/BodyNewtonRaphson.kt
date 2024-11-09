@@ -162,7 +162,7 @@ fun BodyNewtonRaphson() {
                 .fillMaxSize()
         ) {
             if (bandera.value.isEmpty()) {
-                Text(text = "Al llenar todas las casillas, oprima el boton 'calcular'")
+                //Text(text = "Al llenar todas las casillas, oprima el boton 'calcular'")
             } else {
                 NewtonRaphson(
                     x = xk.value.toDouble(),

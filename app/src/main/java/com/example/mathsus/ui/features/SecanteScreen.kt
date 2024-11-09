@@ -3,19 +3,24 @@ package com.example.mathsus.ui.features
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
@@ -57,6 +62,7 @@ fun SecanteScreen(navController: NavHostController) {
         DestinosSecante.Pantalla3,
         DestinosSecante.Pantalla4
     )
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -79,11 +85,12 @@ fun SecanteScreen(navController: NavHostController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(padding)
+                            .verticalScroll(rememberScrollState()) // Agrega el scroll vertical aquí
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(450.dp) // Puedes ajustar la altura según sea necesario
+                                .heightIn(min = 200.dp, max = 450.dp)
                         ) {
                             BodySecante()
                         }
@@ -113,6 +120,7 @@ fun SecanteScreen(navController: NavHostController) {
         )
     }
 }
+
 
 @Composable
 fun BottomNavBarSecante(navController: NavController) {

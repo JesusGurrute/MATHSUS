@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material3.*
 //noinspection UsingMaterialAndMaterial3Libraries
@@ -36,9 +38,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.nav_menu_bisection.DestinosBisection
 import com.example.mathsus.ui.features.nav_menu_bisection.DrawerBisection
-import com.example.mathsus.ui.features.nav_menu_secante.Drawer
 import com.example.mathsus.ui.features.nav_menu_secante.TopBar
-import com.example.mathsus.ui.features.nav_menu_secante.DestinosSecante
 import com.example.mathsus.ui.methods.bisectionMethod.BodyBisection
 
 @Composable
@@ -74,11 +74,12 @@ fun BisectionScreen(navController: NavHostController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(padding)
+                            .verticalScroll(rememberScrollState()) // Agrega el scroll vertical aquí
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(450.dp) // Puedes ajustar la altura según sea necesario
+                                .heightIn(min = 200.dp, max = 450.dp)
                         ) {
                             BodyBisection()
                         }
@@ -103,7 +104,6 @@ fun BisectionScreen(navController: NavHostController) {
                         }
                     }
                 }
-
             },
             bottomBar = { BottomNavBarBisection(navController = navController) },
         )

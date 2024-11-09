@@ -2,7 +2,6 @@ package com.example.mathsus.ui.methods.secanteMethod
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
@@ -55,6 +54,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mathsus.R
 import com.example.mathsus.ui.features.nav_menu_secante.ResultadoSecante
 import com.example.mathsus.ui.methods.FunctionGraph
@@ -68,21 +68,23 @@ fun BodySecante() {
     val viewModel: GraphViewModel = viewModel()
     val showGraph = remember { mutableStateOf(false) }
     //val wallSecante = "https://kodular-community.s3.dualstack.eu-west-1.amazonaws.com/original/3X/c/e/ce82ada4d9e8591f01abefebfab0dba4a8228eee.png"
+
+    val f = remember { mutableStateOf("") }
+    val a = remember { mutableStateOf("") }
+    val b = remember { mutableStateOf("") }
+    val x2 = remember { mutableStateOf("") }
+    val bandera = remember { mutableStateOf("") }
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
             .padding(10.dp)
-            .background(shape = RoundedCornerShape(16.dp),color = colorScheme.background)
+            .background(shape = RoundedCornerShape(16.dp), color = colorScheme.background)
             .navigationBarsPadding()
             .padding(10.dp)
     ) {
-        val f = remember { mutableStateOf("") }
-        val a = remember { mutableStateOf("") }
-        val b = remember { mutableStateOf("") }
-        val x2 = remember { mutableStateOf("") }
-        val bandera = remember { mutableStateOf("") }
-        val context = LocalContext.current
+
         OutlinedTextField(
             label = { Text(text = "Ingrese la funcion") },
             value = f.value,
@@ -117,14 +119,6 @@ fun BodySecante() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-               /*
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    disabledContainerColor = Color.White,
-                ),
-                */
-
                 onValueChange = {
                     b.value = it
                 },
@@ -140,13 +134,6 @@ fun BodySecante() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-                /*
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    disabledContainerColor = Color.White,
-                ),
-                 */
                 onValueChange = {
                     x2.value = it
                 },
@@ -155,7 +142,11 @@ fun BodySecante() {
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        Row {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+        ) {
             Button(
                 onClick = {
                     if (a.value.isEmpty() || b.value.isEmpty() || x2.value.isEmpty() || f.value.isEmpty()) {
@@ -172,6 +163,20 @@ fun BodySecante() {
 
             Spacer(modifier = Modifier.width(8.dp))
 
+            // Nuevo botón para limpiar los campos
+            Button(
+                onClick = {
+                    f.value = ""
+                    a.value = ""
+                    b.value = ""
+                    x2.value = ""
+                    bandera.value = ""
+                    Toast.makeText(context, "Campos limpios", Toast.LENGTH_SHORT).show()
+                }
+            ) {
+                Text(text = "Limpiar")
+            }
+            /*
             Button(
                 onClick = {
                     viewModel.llamarGraphCoroutine(f.value)
@@ -181,6 +186,8 @@ fun BodySecante() {
             ) {
                 Text(text = "Graficar")
             }
+             */
+
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
@@ -222,7 +229,6 @@ fun PasoBodySecante() {
             .statusBarsPadding()
             .padding(2.dp)
             .background(colorScheme.background)
-            //.background(shape = RoundedCornerShape(16.dp), color = Color.White)
             .navigationBarsPadding()
             .padding(4.dp)
     ) {
@@ -313,13 +319,6 @@ fun PasoBodySecante() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-                /*
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    disabledContainerColor = Color.White,
-                ),
-                 */
                 onValueChange = {
                     x1.value = it
                 },
@@ -334,13 +333,6 @@ fun PasoBodySecante() {
                     capitalization = KeyboardCapitalization.Sentences,
                     keyboardType = KeyboardType.Number
                 ),
-                /*
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    disabledContainerColor = Color.White,
-                ),
-                 */
                 onValueChange = { newValue ->
                     // Primero reemplazamos las comas por puntos
                     val processedValue = newValue.replace(',', '.')
@@ -389,7 +381,7 @@ fun PasoBodySecante() {
                                     text = "x0",
                                     textColor = Color.White,
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 20.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -404,7 +396,7 @@ fun PasoBodySecante() {
                                     text = "x1",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 20.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -419,7 +411,7 @@ fun PasoBodySecante() {
                                     text = "x${resultado.iteracion + 1}",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 20.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -434,7 +426,7 @@ fun PasoBodySecante() {
                                     text = "f(x0)",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 20.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -449,7 +441,7 @@ fun PasoBodySecante() {
                                     text = "f(x1)",
                                     textColor = Color.White, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 20.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -464,7 +456,7 @@ fun PasoBodySecante() {
                                     text = "f(x${resultado.iteracion + 1})",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.azulunicauca),
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     paddingStart = 20.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -565,7 +557,7 @@ fun PasoBodySecante() {
                                     text = "${evaluarFuncion(resultado.x2.toDouble(), f.value)}",
                                     textColor = Color.Red, // Color del texto personalizado
                                     backgroundColor = colorResource(id = R.color.grisunicauca),
-                                    fontSize = 10.sp,
+                                    fontSize = 9.sp,
                                     paddingStart = 20.dp,
                                     paddingEnd = 12.dp,
                                     paddingTop = 6.dp,
@@ -579,13 +571,9 @@ fun PasoBodySecante() {
                             }
                         }
                     }
-                    val absx1x2 = abs(resultado.x1 - resultado.x2.toDouble())
+                    val absx1x2 = abs(resultado.x1 - resultado.x2)
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Note que: ",
-                        color = colorScheme.onBackground,
-                        textAlign = TextAlign.Justify
-                    )
+                    Text(text = "Note que: ", color = colorScheme.onBackground, textAlign = TextAlign.Justify)
                     Text(
                         text = " |x1 - x${resultado.iteracion + 1}| = |${resultado.x1} - ${resultado.x2} | =  $absx1x2 > ${error.value.toDouble()}",
                         color = colorScheme.onBackground,
@@ -601,7 +589,7 @@ fun PasoBodySecante() {
                         )
                     } else {
                         Text(
-                            text = "De manera que, se procede a calcular x${resultado.iteracion + 2}.",
+                            text = "De manera que, se procede a calcular x${resultado.iteracion + 1}.",
                             color = colorScheme.onBackground,
                             textAlign = TextAlign.Justify
                         )
@@ -612,9 +600,7 @@ fun PasoBodySecante() {
 
         if (shouldContinue) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
+                modifier = Modifier.fillMaxWidth().padding(10.dp)
             ) {
                 Text(
                     text = "${currentIndex + 3}. Dado:\n" +
@@ -751,7 +737,7 @@ fun calcularX2Secante(x0: Double, x1: Double, f: String): Double {
     if (fx1 - fx0 == 0.0) {
         throw IllegalArgumentException("División por cero detectada durante el cálculo.")
     }
-    val x2 = x1 - ((x1 - x0) * fx1 / (fx1 - fx0))
+    val x2 = x1 - (((x1 - x0)  / (fx1 - fx0))* fx1)
 
     val roundx2 = String.format("%.4f", x2)
 

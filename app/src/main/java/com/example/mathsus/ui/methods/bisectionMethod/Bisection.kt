@@ -2,20 +2,31 @@ package com.example.mathsus.ui.methods.bisectionMethod
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.mathsus.R
 import com.example.mathsus.ui.methods.Metodo
+import com.example.mathsus.ui.methods.secanteMethod.CurvedBorderText
 import org.mariuszgromada.math.mxparser.mathcollection.MathFunctions.abs
 import kotlin.math.sign
 
@@ -28,32 +39,100 @@ fun Bisection(
     epsilon: Double,
 ) {
 
-    var k = 0
+    var n = 0
     var fa = Metodo(a = a, f = f)
     var fb = Metodo(a = b, f = f)
     var error: Double
-    var c: Double
-    var fc: Double
+    var p: Double
+    var fp: Double
     var currentA = a
     var currentB = b
 
     val context = LocalContext.current
+
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .horizontalScroll(rememberScrollState())
+            .width(380.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Row {
-                Text(text = " k ")
-                Text(text = "        c_k       ")
-                Text(text = "                f(c_k)     ")
-                Text(text = "                  error     ")
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .width(IntrinsicSize.Min)
+                    .horizontalScroll(rememberScrollState())
+                    .background(
+                        shape = RoundedCornerShape(4.dp),
+                        color = colorResource(id = R.color.grisunicauca)
+                    )
+            ) {
+                CurvedBorderText(
+                    text = "n",
+                    textColor = Color.White,
+                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                    fontSize = 14.sp,
+                    paddingStart = 6.dp,
+                    paddingEnd = 6.dp,
+                    paddingTop = 6.dp,
+                    paddingBottom = 6.dp,
+                    borderColor = Color.Black,
+                    borderWidth = 1.dp, // Grosor del borde
+                    modifier = Modifier
+                        .weight(0.2f)
+                        .wrapContentSize(Alignment.Center)
+                )
+                CurvedBorderText(
+                    text = "p",
+                    textColor = Color.White,
+                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                    fontSize = 14.sp,
+                    paddingStart = 12.dp,
+                    paddingEnd = 12.dp,
+                    paddingTop = 6.dp,
+                    paddingBottom = 6.dp,
+                    borderColor = Color.Black,
+                    borderWidth = 1.dp, // Grosor del borde
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentSize(Alignment.Center)
+                )
+                CurvedBorderText(
+                    text = "f(p)",
+                    textColor = Color.White,
+                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                    fontSize = 14.sp,
+                    paddingStart = 12.dp,
+                    paddingEnd = 12.dp,
+                    paddingTop = 6.dp,
+                    paddingBottom = 6.dp,
+                    borderColor = Color.Black,
+                    borderWidth = 1.dp, // Grosor del borde
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentSize(Alignment.Center)
+                )
+                CurvedBorderText(
+                    text = "tol",
+                    textColor = Color.White,
+                    backgroundColor = colorResource(id = R.color.azulunicauca),
+                    fontSize = 14.sp,
+                    paddingStart = 12.dp,
+                    paddingEnd = 12.dp,
+                    paddingTop = 6.dp,
+                    paddingBottom = 6.dp,
+                    borderColor = Color.Black,
+                    borderWidth = 1.dp, // Grosor del borde
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentSize(Alignment.Center)
+                )
             }
 
             if (fa.sign == fb.sign) {
@@ -66,14 +145,14 @@ fun Bisection(
 
             error = currentB - currentA
 
-            while (k <= 200) {
+            while (n <= 200) {
                 error /= 2
-                c = currentA + error
-                fc = Metodo(a = c, f = f)
+                p = currentA + error
+                fp = Metodo(a = p, f = f)
 
-                val roundc = String.format("%.4f", c)
+                val roundc = String.format("%.4f", p)
 
-                val roundfc = String.format("%.4e", fc)
+                val roundfc = String.format("%.4e", fp)
                 val parts = roundfc.split("e")
                 val coefficient = parts[0].toDouble()
                 val exponent = parts[1].toInt()
@@ -95,11 +174,75 @@ fun Bisection(
                 }
 
 
-                Row {
-                    Text(text = " $k ")
-                    Text(text = "     $roundc      ")
-                    Text(text = "          $trimmedCoefficient * 10^$exponent      ")
-                    Text(text = "          $errorCoefficient * 10^$exponenterror     ")
+                Row (modifier = Modifier
+                    .fillMaxWidth()
+                    .width(IntrinsicSize.Min)
+                    .horizontalScroll(rememberScrollState())
+                    .background(
+                        shape = RoundedCornerShape(4.dp),
+                        color = colorResource(id = R.color.grisunicauca)
+                    )
+                ){
+                    CurvedBorderText(
+                        text = "$n",
+                        textColor = Color.Black, // Color del texto personalizado
+                        backgroundColor = colorResource(id = R.color.grisunicauca),
+                        fontSize = 10.sp,
+                        paddingStart = 6.dp,
+                        paddingEnd = 6.dp,
+                        paddingTop = 6.dp,
+                        paddingBottom = 6.dp,
+                        borderColor = Color.Black,
+                        borderWidth = 1.dp, // Grosor del borde
+                        modifier = Modifier
+                            .weight(0.2f)
+                            .wrapContentSize(Alignment.Center)
+                    )
+                    CurvedBorderText(
+                        text = roundc,
+                        textColor = Color.Black, // Color del texto personalizado
+                        backgroundColor = colorResource(id = R.color.grisunicauca),
+                        fontSize = 10.sp,
+                        paddingStart = 12.dp,
+                        paddingEnd = 12.dp,
+                        paddingTop = 6.dp,
+                        paddingBottom = 6.dp,
+                        borderColor = Color.Black,
+                        borderWidth = 1.dp, // Grosor del borde
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentSize(Alignment.Center)
+                    )
+                    CurvedBorderText(
+                        text = "$trimmedCoefficient * 10^$exponent ",
+                        textColor = Color.Black, // Color del texto personalizado
+                        backgroundColor = colorResource(id = R.color.grisunicauca),
+                        fontSize = 10.sp,
+                        paddingStart = 12.dp,
+                        paddingEnd = 12.dp,
+                        paddingTop = 6.dp,
+                        paddingBottom = 6.dp,
+                        borderColor = Color.Black,
+                        borderWidth = 1.dp, // Grosor del borde
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentSize(Alignment.Center)
+                    )
+                    CurvedBorderText(
+                        text = "$errorCoefficient * 10^$exponenterror  ",
+                        textColor = Color.Black, // Color del texto personalizado
+                        backgroundColor = colorResource(id = R.color.grisunicauca),
+                        fontSize = 10.sp,
+                        paddingStart = 12.dp,
+                        paddingEnd = 12.dp,
+                        paddingTop = 6.dp,
+                        paddingBottom = 6.dp,
+                        borderColor = Color.Black,
+                        borderWidth = 1.dp, // Grosor del borde
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentSize(Alignment.Center)
+                    )
                 }
 
                 if (abs(error) < epsilon) {
@@ -107,24 +250,17 @@ fun Bisection(
                     return
                 }
 
-                if (fa.sign != Metodo(a = c, f = f).sign) {
-                    currentB = c
-                    fb = Metodo(a = c, f = f)
+                if (fa.sign != Metodo(a = p, f = f).sign) {
+                    currentB = p
+                    fb = Metodo(a = p, f = f)
                 } else {
-                    currentA = c
-                    fa = Metodo(a = c, f = f)
+                    currentA = p
+                    fa = Metodo(a = p, f = f)
                 }
-
-                k++
+                n++
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ProofBisection() {
-    Bisection(f = "x^10-1", a = 0.0, b = 1.4, epsilon = 0.001)
 }
 
 
